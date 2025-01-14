@@ -1,4 +1,4 @@
-package com.qpartner.tests;
+package com.tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
@@ -22,7 +22,7 @@ public class SampleTest {
         options.addArguments("--start-maximized");
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @Test
