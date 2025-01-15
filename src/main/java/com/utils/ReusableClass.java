@@ -7,8 +7,13 @@ import com.base.BaseClass;
 
 public class ReusableClass extends BaseClass {
     public void navigateTo(String url) {
+        setUp();
         driver.get(url);
     }
+    public String getPageTitle() {
+        return driver.getTitle();
+    }
+
 
     public WebElement waitForElementVisible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
