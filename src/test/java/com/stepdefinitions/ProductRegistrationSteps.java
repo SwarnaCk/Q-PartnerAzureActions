@@ -37,8 +37,8 @@ public class ProductRegistrationSteps {
         String actualTitle = reusable.getPageTitle();
         String expectedTitle = "Home";
         
-        // Assertions.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
-        // Assertions.assertEquals(expectedTitle, actualTitle, "Page title should be '" + expectedTitle + "'");
+        Assertions.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
+       
         
     }
 }
