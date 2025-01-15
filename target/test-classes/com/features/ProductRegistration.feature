@@ -1,5 +1,8 @@
-Feature: Google Search Functionality
+Feature: Product Registration
 
-  Scenario: Verify Google search page title
-    Given I am on the Google search page
-    Then the page title should be "Google"
+  Scenario: Successful product registration
+    Given I am on the login page
+    When I enter username "brateleedemock@yopmail.com.dev2"
+    And I enter password "Cloudkaptan@1"
+    And I click the login button
+    Then I should be logged in successfully
