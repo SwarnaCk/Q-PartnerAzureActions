@@ -6,3 +6,5 @@ Feature: Product Registration
     And I enter password "Cloudkaptan@1"
     And I click the login button
     Then I should be logged in successfully
+    And I fill the project information details
+    

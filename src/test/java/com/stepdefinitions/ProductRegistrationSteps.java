@@ -3,6 +3,9 @@ package com.stepdefinitions;
 import org.junit.jupiter.api.Assertions;
 import com.utils.ReusableClass;
 import com.pages.LoginPage;
+import com.pages.ProjectInfo;
+
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,6 +14,7 @@ import io.cucumber.java.en.When;
 public class ProductRegistrationSteps {
     private ReusableClass reusable = new ReusableClass();
     private LoginPage loginPage = new LoginPage(reusable);
+    private ProjectInfo projectInfo = new ProjectInfo(reusable);
 
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
@@ -40,5 +44,20 @@ public class ProductRegistrationSteps {
         Assertions.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
        
         
+    }
+    @Then("I fill the project information details")
+    public void iFillTheProjectInformationDetails() {
+        // Write code to fill project information details
+        projectInfo.enterProjectName("Test Project");
+        projectInfo.enterStreetAddress("123 Test Street");
+        projectInfo.enterCityName("Test City");
+        projectInfo.selectAddress("CA");
+        projectInfo.selectState("MB"); // Assuming ON for Ontario
+        projectInfo.enterPostalCode("A1A 1A1");
+        
+        // For installation and operation dates, you might want to use the current date
+        // or a specific date. Here's an example using a specific date:
+        projectInfo.selectInstallationDate("2023-07-01");
+        projectInfo.selectOperationDate("2023-07-15");
     }
 }

@@ -13,7 +13,9 @@ public class ReusableClass extends BaseClass {
     public String getPageTitle() {
         return driver.getTitle();
     }
-
+    public WebElement findElement(By locator) {
+        return driver.findElement(locator);
+    }
 
     public WebElement waitForElementVisible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
