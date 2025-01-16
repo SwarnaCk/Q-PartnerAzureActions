@@ -50,5 +50,7 @@ public class ReusableClass extends BaseClass {
         wait.until(webDriver -> ((org.openqa.selenium.JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
     }
-    
+    public void goToNextPage(By nextBtn) {
+        click(nextBtn);
+    }
 }

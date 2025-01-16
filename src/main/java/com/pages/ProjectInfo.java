@@ -16,9 +16,11 @@ public class ProjectInfo {
     private By addressCountryDrpDwn = By.xpath("//select[@name='addressCountry']");
     private By addessStateDrpDwn= By.xpath("//select[@name='addessState']");
     private By postalCodeField = By.xpath("//input[@placeholder='Postal Code']");
-    private By installationDateCalendar = By.xpath("//input[@name='installationDate']/..//button[@title='Select a date for ']");
-    private By operateDateCalendar = By.xpath("//input[@name='operateDate']/..//button[@title='Select a date for ']");
-    
+    private By installationDateCalendar = By.xpath("//input[@name='installationDate']");
+    private By installlationDate= By.xpath("//td[@data-value='2025-01-14']");
+    private By operateDateCalendar = By.xpath("//input[@name='operateDate']");
+    private By operateDate= By.xpath("//td[@data-value='2025-01-14']");
+    private By nextBtn= By.xpath("//button[@title='NavigatetoPurchaseInformation']");
 
     public ProjectInfo(ReusableClass reusable) {
         this.reusable = reusable;
@@ -48,12 +50,16 @@ public class ProjectInfo {
     public void enterPostalCode(String username) {
         reusable.sendKeys(postalCodeField, username);
     }
-    public void selectInstallationDate(String username) {
-        //
+    public void selectInstallationDate() {
+        reusable.click(installationDateCalendar);
+        reusable.waitForElementVisible(installlationDate);
+        reusable.click(installlationDate);
     }
-    public void selectOperationDate(String username) {
-        //
+    public void selectOperationDate() {
+        reusable.click(operateDateCalendar);
+        reusable.click(operateDate);
+        reusable.goToNextPage(nextBtn);
     }
-
+    
     
 }
