@@ -1,15 +1,11 @@
 name: Java CI
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch
 
 jobs:
   build:
-
-    runs-on: macos-latest
+    runs-on: macos-latest  # macOS environment
 
     steps:
     - name: Check out repository code
@@ -19,6 +15,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '17'
+        distribution: 'adoptopenjdk'  # Specify the Java distribution
 
     - name: Build with Maven
       run: mvn clean install
