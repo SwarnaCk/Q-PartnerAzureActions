@@ -15,7 +15,8 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '17'
-        distribution: 'adoptopenjdk'  # Specify the Java distribution
+        distribution: 'temurin'  # Specify Temurin as the distribution
+
 
     - name: Build with Maven
       run: mvn clean install
