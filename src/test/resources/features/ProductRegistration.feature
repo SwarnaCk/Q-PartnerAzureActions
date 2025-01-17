@@ -11,4 +11,3 @@ Feature: Product Registration
     And I fill the project information details
     And I fill the purchasing information details
     And I fill the project owner information details
-    
