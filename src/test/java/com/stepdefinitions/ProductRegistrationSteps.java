@@ -71,13 +71,14 @@ public class ProductRegistrationSteps {
     }
     @When("I fill the project information details")
     public void iFillTheProjectInformationDetails() {
-        
-        projectInfo.enterProjectName("Test Project");
-        projectInfo.enterStreetAddress("123 Test Street");
-        projectInfo.enterCityName("Test City");
-        projectInfo.selectAddress("CA");
-        projectInfo.selectState("MB"); 
-        projectInfo.enterPostalCode("800008");
+        jsonObject=ConfigReader.readJsonFile("projectInfo.json");
+        jsonObject.get("jsonObject");
+        projectInfo.enterProjectName("projectName");
+        projectInfo.enterStreetAddress("streetaddress");
+        projectInfo.enterCityName("cityname");
+        projectInfo.selectAddress("address");
+        projectInfo.selectState("state"); 
+        projectInfo.enterPostalCode("postalcode");
         
         projectInfo.selectInstallationDate();
         projectInfo.selectOperationDate();

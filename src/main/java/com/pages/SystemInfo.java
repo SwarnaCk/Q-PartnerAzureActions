@@ -21,6 +21,9 @@ public class SystemInfo {
     private By rackingBrandDrpDwn = By.xpath("//select[@name='RackingBrand']");
 
     private By nextBtn= By.xpath("//div[@class='btnCls']//button[contains(text(),'Next')]");
+    private By productdropdown = By.xpath("//button[@name=\"yesNoPicklist\"]");
+    private By solarpanneldropdown = By.xpath("(//button[@name=\"haveProduct\"])[1]");
+    private By pvInverterButton = By.xpath("//span[text()=\"PV Inverter\"]/..");
 
     public SystemInfo(ReusableClass reusable) {
         this.reusable = reusable;
@@ -57,6 +60,21 @@ public class SystemInfo {
         Select select = new Select(dropdown);
         select.selectByValue(options);
         reusable.goToNextPage(nextBtn);
+    }
+    public void selectProduct(String product) {
+        WebElement dropdown = reusable.findElement(productdropdown);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(product);
+    }
+    public void selectModule(String module) {
+        WebElement dropdown = reusable.findElement(solarpanneldropdown);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(module);
+    }
+    public void essProduct(String essProduct) {
+        WebElement dropdown = reusable.findElement(pvInverterButton);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(essProduct);
     }
     
 }
