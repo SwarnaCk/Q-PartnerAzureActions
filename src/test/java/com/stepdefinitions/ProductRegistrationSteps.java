@@ -1,6 +1,9 @@
 package com.stepdefinitions;
 
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Assertions;
+
+import com.utils.ConfigReader;
 import com.utils.ReusableClass;
 import com.pages.LoginPage;
 import com.pages.HomePage;
@@ -15,6 +18,7 @@ import io.cucumber.java.en.When;
 
 
 public class ProductRegistrationSteps {
+    private JSONObject jsonObject;
     private ReusableClass reusable = new ReusableClass();
     private LoginPage loginPage = new LoginPage(reusable);
     private ProjectInfo projectInfo = new ProjectInfo(reusable);
@@ -28,13 +32,15 @@ public class ProductRegistrationSteps {
         reusable.navigateTo("https://qcellsnorthamerica123--dev2.sandbox.my.site.com/qpp/s/login/?startURL=%2Fqpp%2Fs%2F%3Ft%3D1736925342820");
     }
 
-    @When("I enter username {string}")
-    public void iEnterUsername(String username) {
+    @When("I enter username")
+    public void iEnterUsername() {
+        String username=ConfigReader.getProperty("username");
         loginPage.enterUsername(username);
     }
 
-    @When("I enter password {string}")
-    public void iEnterPassword(String password) {
+    @When("I enter password")
+    public void iEnterPassword() {
+        String password=ConfigReader.getProperty("password");
         loginPage.enterPassword(password);
     }
 
@@ -53,13 +59,15 @@ public class ProductRegistrationSteps {
     }
     @When("I fill the system information details")
     public void iFillTheSystemInformationDetails() {
-        systemInfo.enterSiteId("12345678");
+        jsonObject=ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.enterSiteId((String)jsonObject.get("siteId"));
         systemInfo.selectProductDropdown();
-        systemInfo.selectBrand("JA Solar");
-        systemInfo.selectPowerClass("335");
-        systemInfo.selectNumberOfPanels("200");
-        systemInfo.enterRegistrationNumber("1234567");
-        systemInfo.selectRackingBrand("Ironridge");
+        systemInfo.selectBrand((String)jsonObject.get("brand"));
+        systemInfo.selectPowerClass((String)jsonObject.get("powerClass"));
+        systemInfo.selectNumberOfPanels((String)jsonObject.get("numberOfPanels"));
+        systemInfo.enterRegistrationNumber((String)jsonObject.get("registrationNumber"));
+        systemInfo.selectRackingBrand((String)jsonObject.get("rackingBrand"));
     }
     @When("I fill the project information details")
     public void iFillTheProjectInformationDetails() {
