@@ -9,8 +9,10 @@ import com.pages.LoginPage;
 import com.pages.HomePage;
 import com.pages.SystemInfo;
 import com.pages.ProjectInfo;
+import com.pages.ProjectListTab;
 import com.pages.PurchaseInfo;
 import com.pages.ProjectOwnerInfo;
+import com.pages.ProjectDetails;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -18,14 +20,17 @@ import io.cucumber.java.en.When;
 
 
 public class ProductRegistrationSteps {
+    
     private JSONObject jsonObject;
     private ReusableClass reusable = new ReusableClass();
     private LoginPage loginPage = new LoginPage(reusable);
     private ProjectInfo projectInfo = new ProjectInfo(reusable);
+    private ProjectDetails projectDetails = new ProjectDetails(reusable);
     private PurchaseInfo purchaseInfo = new PurchaseInfo(reusable);
     private HomePage homePage = new HomePage(reusable);
     private SystemInfo systemInfo = new SystemInfo(reusable);
     private ProjectOwnerInfo projectOwnerInfo = new ProjectOwnerInfo(reusable);
+    private ProjectListTab projectListTab = new ProjectListTab(reusable);
 
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
@@ -58,26 +63,29 @@ public class ProductRegistrationSteps {
         homePage.selectNewProjectRegistration();
     }
     @When("I fill the system information details")
-    public void iFillTheSystemInformationDetails() {
+    public void iFillTheSystemInformationDetails()throws InterruptedException {
         jsonObject=ConfigReader.readJsonFile("systemInfo.json");
         jsonObject.get("jsonObject");
         systemInfo.enterSiteId((String)jsonObject.get("siteId"));
         systemInfo.selectProductDropdown();
         systemInfo.selectBrand((String)jsonObject.get("brand"));
-        systemInfo.selectPowerClass((String)jsonObject.get("powerClass"));
+        Thread.sleep(3000);
+        systemInfo.selectPowerClass();
         systemInfo.selectNumberOfPanels((String)jsonObject.get("numberOfPanels"));
         systemInfo.enterRegistrationNumber((String)jsonObject.get("registrationNumber"));
         systemInfo.selectRackingBrand((String)jsonObject.get("rackingBrand"));
     }
     @When("I fill the project information details")
     public void iFillTheProjectInformationDetails() {
+        jsonObject=ConfigReader.readJsonFile("projectInfo.json");
+        jsonObject.get("jsonObject");
         
-        projectInfo.enterProjectName("Test Project");
-        projectInfo.enterStreetAddress("123 Test Street");
-        projectInfo.enterCityName("Test City");
-        projectInfo.selectAddress("CA");
-        projectInfo.selectState("MB"); 
-        projectInfo.enterPostalCode("800008");
+        projectInfo.enterProjectName((String)jsonObject.get("projectName"));
+        projectInfo.enterStreetAddress((String)jsonObject.get("streetAddress"));
+        projectInfo.enterCityName((String)jsonObject.get("cityName"));
+        projectInfo.selectAddress((String)jsonObject.get("address"));
+        projectInfo.selectState((String)jsonObject.get("state")); 
+        projectInfo.enterPostalCode((String)jsonObject.get("postalCode"));
         
         projectInfo.selectInstallationDate();
         projectInfo.selectOperationDate();
@@ -92,10 +100,64 @@ public class ProductRegistrationSteps {
 
     @When("I fill the project owner information details")
     public void iFillTheProjectOwnerInformationDetails() {
-        projectOwnerInfo.selectOwnerName("John", "Doe");
-        projectOwnerInfo.selectOwnerEmail("johndoe@example.com");
-        projectOwnerInfo.selectOwnerContactNumber("1234567890");
-        projectOwnerInfo.selectNotes("Test Notes");
+        jsonObject=ConfigReader.readJsonFile("projectOwnerInfo.json");
+        String fname=(String)jsonObject.get("ownerFName");
+        String lname=(String)jsonObject.get("ownerLName");
+        projectOwnerInfo.selectOwnerName(fname, lname);
+        projectOwnerInfo.selectOwnerEmail((String)jsonObject.get("ownerEmail"));
+        projectOwnerInfo.selectOwnerContactNumber((String)jsonObject.get("ownerContactNum"));
+        projectOwnerInfo.selectNotes((String)jsonObject.get("notes"));
+    }
+
+    @Then("I verify project Registration Details in Project Details Tab")
+    public void iVerifyProjectRegistrationDetailsInProjectDetailsTab() {
+
+        // Verify Project Information
+        JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
+        Assertions.assertEquals((String)projectInfoJson.get("projectName"), projectInfo.getProjectName(), "Project name mismatch");
+        // Verify System Information
+        JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
+        Assertions.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand(), "Brand mismatch");
+        // Verify Project Owner Information
+        JSONObject projectOwnerInfoJson = ConfigReader.readJsonFile("projectOwnerInfo.json");
+        Assertions.assertEquals((String)projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail(), "Owner email mismatch");
+        Assertions.assertEquals((String)projectOwnerInfoJson.get("ownerContactNum"), projectOwnerInfo.getOwnerContactNumber(), "Owner contact number mismatch");
+        Assertions.assertEquals((String)projectOwnerInfoJson.get("notes"), projectOwnerInfo.getNotes(), "Notes mismatch");
+    }
+
+    @Then("I click the submit button")
+    public void iClickSubmitButton() {
+        projectDetails.saveDetails();
+    }
+    @Then("I verify details of Project in project details section")
+    public void iVerifyProjectDetailsInProjectDetailsTable() { 
+        JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
+        String actualProjectName=projectListTab.getProjectName();
+        String expectedProjectName=(String)projectInfoJson.get("projectName");
+        Assertions.assertEquals(expectedProjectName, actualProjectName, "Project name mismatch");
+    }
+
+    @When("I click on the download PDF button")
+    public void clickDownloadPdfButton() {
+        projectListTab.clickDownloadPdf();
+    }
+
+    @When("I switch to the PDF tab")
+    public void switchToPdfTab() {
+        projectListTab.switchToPdfTab();
+    }
+
+    @Then("the PDF should contain the project name")
+    public void validatePdfContent() {
+        JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
+        String projectName=(String)projectInfoJson.get("projectName");  
+        boolean containsProjectName = projectListTab.validatePdfContent(projectName);
+        Assertions.assertTrue(containsProjectName, "PDF does not contain the project name: " + projectName);
+    }
+
+    @Then("I close the PDF tab and switch back")
+    public void closePdfTabAndSwitchBack() {
+        projectListTab.closePdfTabAndSwitchBack();
     }
     
 }

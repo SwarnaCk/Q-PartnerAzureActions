@@ -1,7 +1,11 @@
 package com.utils;
 
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.base.BaseClass;
 
@@ -10,11 +14,19 @@ public class ReusableClass extends BaseClass {
         setUp();
         driver.get(url);
     }
+    public By getAttr(String path,String key) {
+        JSONObject jsonObject=ConfigReader.readJsonFile(path);
+        String keyValue=(String)jsonObject.get(key);
+        return By.xpath("//div[contains(text(),'" + keyValue + "')]");
+    }
+    public WebDriver getDriver() {
+        return this.driver;
+    }
     public String getPageTitle() {
         return driver.getTitle();
     }
     public WebElement findElement(By locator) {
-        return driver.findElement(locator);
+        return waitForElementVisible(locator).findElement(locator);
     }
 
     public WebElement waitForElementVisible(By locator) {

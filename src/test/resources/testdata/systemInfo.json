@@ -1,7 +1,7 @@
 {
     "siteId": "12345678",
     "brand": "JA Solar",
-    "powerClass": "300",
+    "powerClass": "230",
     "numberOfPanels": "20",
     "registrationNumber": "878737",
     "rackingBrand":"Ironridge"

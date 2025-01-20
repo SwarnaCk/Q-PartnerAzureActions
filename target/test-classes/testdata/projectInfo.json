@@ -1,6 +1,1 @@
-{
-    "projectName": "Solar Project 1",
-    "address": "123 Sun Street, Solar City",
-    "postcode": "12345",
-    "country": "Solarland"
-  }
+{"address":"CA","cityName":"Test City","streetAddress":"123 Test Street","postalCode":"12345","state":"MB","projectName":"Y-Solowarm"}

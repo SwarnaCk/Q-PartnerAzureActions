@@ -25,6 +25,17 @@ public class SystemInfo {
     public SystemInfo(ReusableClass reusable) {
         this.reusable = reusable;
     }
+    /*
+     *   public String getSiteId() {
+        return reusable.getText(siteIdField);
+    }
+     */
+  
+
+    public String getBrand() {
+        String path="systemInfo.json";
+        return reusable.getText(reusable.getAttr(path,"brand"));
+    }
 
     public void enterSiteId(String siteIdVal) {
         reusable.sendKeys(siteId, siteIdVal);
@@ -39,10 +50,11 @@ public class SystemInfo {
         Select select = new Select(dropdown);
         select.selectByVisibleText(options);
     }
-    public void selectPowerClass(String options) {
+    public void selectPowerClass() {
         WebElement dropdown = reusable.findElement(powerClassDrpDwn);
         Select select = new Select(dropdown);
-        select.selectByVisibleText(options);
+        select.selectByIndex(2);
+        
     }
     public void selectNumberOfPanels(String number) {
         

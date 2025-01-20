@@ -14,11 +14,23 @@ public class ProjectOwnerInfo {
     private By projectOwnerPhone= By.xpath("//input[@name='OwnerPhone']");
     private By projectOwnerNotes= By.xpath("//textarea[@name='OwnerNoted']");
     private By reviewBtn= By.xpath("//button[@title='Review your Project']");
+    private String path = "projectOwnerInfo.json";
 
     public ProjectOwnerInfo(ReusableClass reusable) {
         this.reusable = reusable;
     }
 
+    public String getOwnerEmail() {
+        return reusable.getText(reusable.getAttr(path, "ownerEmail"));
+    }
+
+    public String getOwnerContactNumber() {
+        return reusable.getText(reusable.getAttr(path, "ownerContactNum"));
+    }
+
+    public String getNotes() {
+        return reusable.getText(reusable.getAttr(path, "notes"));
+    }
     
     public void selectOwnerName(String fName,String lName) {
         reusable.sendKeys(projectOwnerFname, fName);
