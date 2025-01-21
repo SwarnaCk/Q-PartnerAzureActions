@@ -21,9 +21,36 @@ public class ProjectInfo {
     private By operateDateCalendar = By.xpath("//input[@name='operateDate']");
     private By operateDate= By.xpath("//td[@data-value='2025-01-14']");
     private By nextBtn= By.xpath("//button[@title='NavigatetoPurchaseInformation']");
+    
 
     public ProjectInfo(ReusableClass reusable) {
         this.reusable = reusable;
+    }
+     // Method to generate dynamic locator
+    
+    public String getProjectName() {
+        String path="projectInfo.json";
+        return reusable.getText(reusable.getAttr(path,"projectName"));
+    }
+
+    public String getStreetAddress() {
+        return reusable.getText(streetAddressField);
+    }
+
+    public String getCityName() {
+        return reusable.getText(cityNameField);
+    }
+
+    public String getAddress() {
+        return reusable.getText(addressCountryDrpDwn);
+    }
+
+    public String getState() {
+        return reusable.getText(addessStateDrpDwn);
+    }
+
+    public String getPostalCode() {
+        return reusable.getText(postalCodeField);
     }
 
     public void enterProjectName(String username) {
