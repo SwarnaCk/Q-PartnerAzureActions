@@ -70,7 +70,7 @@ public class ProductRegistrationSteps {
         systemInfo.enterSiteId((String)jsonObject.get("siteId"));
         systemInfo.selectProductDropdown();
         systemInfo.selectBrand((String)jsonObject.get("brand"));
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         systemInfo.selectPowerClass();
         systemInfo.selectNumberOfPanels((String)jsonObject.get("numberOfPanels"));
         systemInfo.enterRegistrationNumber((String)jsonObject.get("registrationNumber"));

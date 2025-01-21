@@ -1,7 +1,6 @@
 package com.pages;
 
 import org.openqa.selenium.By;
-// import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -16,7 +15,6 @@ public class SystemInfo {
     private By productDrpDwnValue = By.xpath("//lightning-base-combobox-item[@data-value='No']");
     private By moduleDrpdwnValue = By.xpath("//lightning-formatted-text[contains(text(),'Qcells DC Solar panel')]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//lightning-base-combobox-item//span[text()='NO']");
     private By brandDrpDwn = By.xpath("//select[@name='PanelBrand']");
-    // private By brandTextBox = By.xpath("//input[@name='PanelBrand']");
     private By powerClassDrpDwn = By.xpath("//select[@name='PanelPowerClass']");
     private By numberOfPanels = By.xpath("//input[@name='NumberOfPanles']");
     private By regNumberField= By.xpath("//input[@name='WifiDongleReNum']");
@@ -36,13 +34,7 @@ public class SystemInfo {
     public SystemInfo(ReusableClass reusable) {
         this.reusable = reusable;
     }
-    /*
-     *   public String getSiteId() {
-        return reusable.getText(siteIdField);
-    }
-     */
-  
-
+    
     public String getBrand() {
         String path="systemInfo.json";
         return reusable.getText(reusable.getAttr(path,"brand"));
@@ -91,9 +83,6 @@ public class SystemInfo {
         reusable.clickUsingJavaScript(moduleDrpdwnValue);
     }
     public void essProduct() {
-        // WebElement dropdown = reusable.findElement(pvInverterButton);
-        // Select select = new Select(dropdown);
-        // select.selectByVisibleText(essProduct);
         reusable.clickUsingJavaScript(essProductDrpdwn);
         reusable.click(essProduct);
     }

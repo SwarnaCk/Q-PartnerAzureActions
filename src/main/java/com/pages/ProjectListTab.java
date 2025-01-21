@@ -14,8 +14,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+
 
 public class ProjectListTab {
     private ReusableClass reusable;
@@ -43,7 +42,6 @@ public class ProjectListTab {
 
     public void clickDownloadPdf() {
         reusable.click(getDownloadBtn());
-        // reusable.waitForNewTabToLoad();
     }
 
     public void switchToPdfTab() {
