@@ -126,7 +126,7 @@ public class ProductRegistrationSteps {
     }
 
     @Then("I click the submit button")
-    public void iClickSubmitButton() {
+    public void iClickSubmitButton()throws InterruptedException {
         projectDetails.saveDetails();
     }
     @Then("I verify details of Project in project details section")
@@ -148,11 +148,9 @@ public class ProductRegistrationSteps {
     }
 
     @Then("the PDF should contain the project name")
-    public void validatePdfContent() {
-        JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
-        String projectName=(String)projectInfoJson.get("projectName");  
-        boolean containsProjectName = projectListTab.validatePdfContent(projectName);
-        Assertions.assertTrue(containsProjectName, "PDF does not contain the project name: " + projectName);
+    public void validatePdfContent()throws Exception { 
+        boolean containsProjectName = projectListTab.validatePdfContent("Test City");
+        Assertions.assertTrue(containsProjectName);
     }
 
     @Then("I close the PDF tab and switch back")

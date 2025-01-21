@@ -14,9 +14,10 @@ public class ProjectDetails {
     public ProjectDetails(ReusableClass reusable) {
         this.reusable = reusable;
     }
-    public void saveDetails() {
+    public void saveDetails()throws InterruptedException {
         reusable.click(saveProjectBtn);
         reusable.click(submitProjectBtn);
+        Thread.sleep(2000);
         reusable.click(cnfrmSubmitBtn);
     }
     

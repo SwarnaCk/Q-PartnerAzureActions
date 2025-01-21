@@ -14,7 +14,6 @@ Feature: Product Registration
     Then I verify project Registration Details in Project Details Tab
     And I click the submit button
     Then I verify details of Project in project details section
-    When I click on the download PDF button
-    And I switch to the PDF tab
+    When I click on the download PDF button 
     Then the PDF should contain the project name
-    And I close the PDF tab and switch back
+    

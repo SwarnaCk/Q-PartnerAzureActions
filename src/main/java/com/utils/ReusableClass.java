@@ -2,10 +2,8 @@ package com.utils;
 
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.base.BaseClass;
 
@@ -64,5 +62,15 @@ public class ReusableClass extends BaseClass {
     }
     public void goToNextPage(By nextBtn) {
         click(nextBtn);
+    }
+    public void waitForNewTabToLoad() {
+        int currentTabCount = getDriver().getWindowHandles().size();
+        while (currentTabCount == getDriver().getWindowHandles().size()) {
+            try {
+                Thread.sleep(20000); // Wait for 100 milliseconds
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
