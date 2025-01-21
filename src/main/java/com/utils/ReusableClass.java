@@ -2,6 +2,7 @@ package com.utils;
 
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,7 +31,10 @@ public class ReusableClass extends BaseClass {
     public WebElement waitForElementVisible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-
+    public void clickUsingJavaScript(By locator) {
+        WebElement element = waitForElementVisible(locator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    }
     public WebElement waitForElementClickable(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }

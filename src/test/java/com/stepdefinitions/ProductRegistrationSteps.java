@@ -14,6 +14,7 @@ import com.pages.PurchaseInfo;
 import com.pages.ProjectOwnerInfo;
 import com.pages.ProjectDetails;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -157,5 +158,18 @@ public class ProductRegistrationSteps {
     public void closePdfTabAndSwitchBack() {
         projectListTab.closePdfTabAndSwitchBack();
     }
-    
+    @And("I select 'No' option in dropdown in system information page")
+public void iSelectNoOptionInDropdownInSystemInformationPage() throws Exception {
+        jsonObject=ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.selectProduct();
+        systemInfo.selectModule ();
+        systemInfo.selectBrand((String)jsonObject.get("brand"));
+        systemInfo.selectPowerClass();
+        systemInfo.selectNumberOfPanels((String)jsonObject.get("numberOfPanels"));
+        systemInfo.essProduct();
+        systemInfo.clickPVInverter();
+        systemInfo.selectBrandUndePVInverter();
+        systemInfo.clickBattery();
+}  
 }
