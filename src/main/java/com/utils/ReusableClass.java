@@ -1,6 +1,8 @@
 package com.utils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+// import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.base.BaseClass;
@@ -53,4 +55,19 @@ public class ReusableClass extends BaseClass {
     public void goToNextPage(By nextBtn) {
         click(nextBtn);
     }
+    public void clickUsingJavaScript(By locator) {
+        // WebElement element = findElement(locator);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver; // Use the driver from the base class
+        // js.executeScript("arguments[0].click();", element);
+        WebElement element = driver.findElement(locator);
+        js.executeScript("arguments[0].click();", element);
+    }
+    public void scrollToElement(By locator) {
+        WebElement element = driver.findElement(locator);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    
 }

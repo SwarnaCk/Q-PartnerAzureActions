@@ -7,9 +7,10 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = "src/test/java/com/features",
+    features = "src/test/java/com/features/ProjectRegistrationWithoutSiteID.feature",
     glue = "com.stepdefinitions",
     plugin = {"pretty", "html:target/cucumber-reports.html"}
 )
 public class TestRunner {
+
 }

@@ -12,6 +12,7 @@ import com.pages.ProjectInfo;
 import com.pages.PurchaseInfo;
 import com.pages.ProjectOwnerInfo;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -73,12 +74,12 @@ public class ProductRegistrationSteps {
     public void iFillTheProjectInformationDetails() {
         jsonObject=ConfigReader.readJsonFile("projectInfo.json");
         jsonObject.get("jsonObject");
-        projectInfo.enterProjectName("projectName");
-        projectInfo.enterStreetAddress("streetaddress");
-        projectInfo.enterCityName("cityname");
-        projectInfo.selectAddress("address");
-        projectInfo.selectState("state"); 
-        projectInfo.enterPostalCode("postalcode");
+        projectInfo.enterProjectName((String)jsonObject.get("projectName"));
+        projectInfo.enterStreetAddress((String)jsonObject.get("streetaddress"));
+        projectInfo.enterCityName((String)jsonObject.get("cityname"));
+        projectInfo.selectAddress((String)jsonObject.get("country"));
+        projectInfo.selectState((String)jsonObject.get("state")); 
+        projectInfo.enterPostalCode((String)jsonObject.get("postalcode"));
         
         projectInfo.selectInstallationDate();
         projectInfo.selectOperationDate();
@@ -98,5 +99,20 @@ public class ProductRegistrationSteps {
         projectOwnerInfo.selectOwnerContactNumber("1234567890");
         projectOwnerInfo.selectNotes("Test Notes");
     }
+    @And("I select 'No' option in dropdown in system information page")
+public void iSelectNoOptionInDropdownInSystemInformationPage() throws Exception {
+        jsonObject=ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.selectProduct();
+        systemInfo.selectModule ();
+        systemInfo.selectBrand((String)jsonObject.get("brand"));
+        systemInfo.selectPowerClass((String)jsonObject.get("powerClass"));
+        systemInfo.selectNumberOfPanels((String)jsonObject.get("numberOfPanels"));
+        systemInfo.essProduct();
+        systemInfo.clickPVInverter();
+        systemInfo.selectBrandUndePVInverter();
+        systemInfo.clickBattery();
+        
+}
     
 }

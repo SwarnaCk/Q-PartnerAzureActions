@@ -2,9 +2,10 @@
     "projectName": "Solar Project 1",
     "address": "123 Sun Street, Solar City",
     "postcode": "12345",
+    "cityname":  "Solar City",
     "country": "Solarland",
     "streetaddress":"123 Test Street",
-    "state":"MB",
+    "state":"Alberta",
     "postalcode":"800008"
   }
   

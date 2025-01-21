@@ -1,6 +1,7 @@
 package com.pages;
 
 import org.openqa.selenium.By;
+// import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -13,17 +14,24 @@ public class SystemInfo {
     private By siteId = By.xpath("//input[@name='siteId']");
     private By productDrpDwn = By.xpath("//button[@name='haveProduct']");
     private By productDrpDwnValue = By.xpath("//lightning-base-combobox-item[@data-value='No']");
+    private By moduleDrpdwnValue = By.xpath("//lightning-formatted-text[contains(text(),'Qcells DC Solar panel')]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//lightning-base-combobox-item//span[text()='NO']");
     private By brandDrpDwn = By.xpath("//select[@name='PanelBrand']");
+    // private By brandTextBox = By.xpath("//input[@name='PanelBrand']");
     private By powerClassDrpDwn = By.xpath("//select[@name='PanelPowerClass']");
     private By numberOfPanels = By.xpath("//input[@name='NumberOfPanles']");
     private By regNumberField= By.xpath("//input[@name='WifiDongleReNum']");
     private By rackingField= By.xpath("//span[@title='Racking']");
     private By rackingBrandDrpDwn = By.xpath("//select[@name='RackingBrand']");
+    private By essProductDrpdwn = By.xpath("//lightning-formatted-text[contains(text(),'ESS Products?')]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//button");
+    private By essProduct = By.xpath("//lightning-formatted-text[contains(text(),'ESS Products?')]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//lightning-base-combobox-item//span[text()='No']");
 
     private By nextBtn= By.xpath("//div[@class='btnCls']//button[contains(text(),'Next')]");
     private By productdropdown = By.xpath("//button[@name=\"yesNoPicklist\"]");
     private By solarpanneldropdown = By.xpath("(//button[@name=\"haveProduct\"])[1]");
     private By pvInverterButton = By.xpath("//span[text()=\"PV Inverter\"]/..");
+    private By brandDropdownUnderPVInverter = By.xpath("//select[@name=\"PVInvertorBrand\"]");
+    private By batteryDropdown = By.xpath("//span[text()=\"Battery\"]");
+    private By nextButton = By.xpath("//button[@title=\"NavigatetoSystemInformation\"]");
 
     public SystemInfo(ReusableClass reusable) {
         this.reusable = reusable;
@@ -61,20 +69,34 @@ public class SystemInfo {
         select.selectByValue(options);
         reusable.goToNextPage(nextBtn);
     }
-    public void selectProduct(String product) {
-        WebElement dropdown = reusable.findElement(productdropdown);
-        Select select = new Select(dropdown);
-        select.selectByVisibleText(product);
+    public void selectProduct() {
+        reusable.click(productdropdown);
+        reusable.click(productDrpDwnValue);
     }
-    public void selectModule(String module) {
-        WebElement dropdown = reusable.findElement(solarpanneldropdown);
-        Select select = new Select(dropdown);
-        select.selectByVisibleText(module);
+    public void selectModule() throws InterruptedException{
+        reusable.click(solarpanneldropdown);   
+        Thread.sleep(2000);    
+        reusable.clickUsingJavaScript(moduleDrpdwnValue);
     }
-    public void essProduct(String essProduct) {
-        WebElement dropdown = reusable.findElement(pvInverterButton);
-        Select select = new Select(dropdown);
-        select.selectByVisibleText(essProduct);
+    public void essProduct() {
+        // WebElement dropdown = reusable.findElement(pvInverterButton);
+        // Select select = new Select(dropdown);
+        // select.selectByVisibleText(essProduct);
+        reusable.clickUsingJavaScript(essProductDrpdwn);
+        reusable.click(essProduct);
     }
-    
+    public void clickPVInverter() {
+        reusable.click(pvInverterButton);
+        
+    }
+    public void selectBrandUndePVInverter() {
+        WebElement dropdown = reusable.findElement(brandDropdownUnderPVInverter);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText("AP Systems");
+    }
+    public void clickBattery() {
+        reusable.click(batteryDropdown);
+        reusable.click(nextButton);
+        
+    }
 }
