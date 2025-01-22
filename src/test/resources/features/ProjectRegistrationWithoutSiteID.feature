@@ -1,5 +1,5 @@
 Feature: Project Registration
-
+  @LT-TC-7
   Scenario: Successful project registration
     Given I am on the login page
     When I enter username

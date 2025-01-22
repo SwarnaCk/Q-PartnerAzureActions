@@ -1,5 +1,5 @@
 Feature: Product Registration
-
+  @LT-TC-6
   Scenario: Successful product registration
     Given I am on the login page
     When I enter username
