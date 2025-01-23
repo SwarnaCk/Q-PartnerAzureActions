@@ -1,15 +1,11 @@
-package com.frameworks;
+package com.aiointegration;
 
 import java.io.File;
-
-
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+
 
 public class ResultUploaderToAIOTest {
 

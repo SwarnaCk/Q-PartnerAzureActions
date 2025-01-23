@@ -11,11 +11,11 @@ import org.testng.ITestResult;
 
 import java.io.IOException;
 
-import com.base.BaseTest;
+import com.base.BaseClass;
 
 public class TestListener implements ITestListener {
 
-    BaseTest baseTest = new BaseTest();
+    BaseClass baseTest = new BaseClass();
 
     @Override
     public void onTestFailure(ITestResult result) {

@@ -1,7 +1,5 @@
 package com.base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -11,24 +9,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.utils.RandomDataGenerator;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.Duration;
 import java.util.HashMap;
 
 public class BaseClass {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    protected ChromeOptions options;
+    public static WebDriver driver;
+    public static WebDriverWait wait;
+    public ChromeOptions options;
 
-    @Before
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
         RandomDataGenerator.generateRandomProjectData("projectInfo.json");
         String downloadDir = System.getProperty("user.dir") + "/src/test/resources/pdfData";
-        options = new ChromeOptions();
+        options= new ChromeOptions();
 
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("download.default_directory", downloadDir); // Set the default download directory
@@ -52,9 +47,9 @@ public class BaseClass {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         File destination = new File("target/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png");
         Files.copy(screenshot.toPath(), destination.toPath());
+
     }
 
-    @After
     public void tearDown() {
         if (driver != null) {
             driver.quit();
