@@ -1,5 +1,6 @@
 package com.base;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -44,11 +45,14 @@ public class BaseClass {
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
-    public void captureScreenshot(String testName) throws IOException {
+    public static String captureScreenshot(String testName) throws IOException {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        File destination = new File("target/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png");
-        Files.copy(screenshot.toPath(), destination.toPath());
-
+        String destinationPath = "target/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png";
+        File destination = new File(destinationPath);
+        FileUtils.copyFile(screenshot, destination);
+        String path=destination.toPath().toAbsolutePath().normalize().toString().replace(System.getProperty("user.dir"), "");
+        System.out.println(path);
+        return path;
     }
 
     public void tearDown() {

@@ -38,7 +38,7 @@ public class ResultUploaderToAIOTest {
 
             if (statusCode == 200 || statusCode == 201) {
                 System.out.println("Test results uploaded successfully!");
-                System.out.println("Response Body: " + responseBody);
+                // System.out.println("Response Body: " + responseBody);
             } else {
                 System.err.println("Failed to upload test results. Response Code: " + statusCode);
                 System.err.println("Response Body: " + responseBody);

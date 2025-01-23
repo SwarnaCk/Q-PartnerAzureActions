@@ -1,66 +1,58 @@
-// package com.stepdefinitions;
+package com.stepdefinitions;
 
-// import com.aventstack.extentreports.ExtentReports;
-// import com.aventstack.extentreports.ExtentTest;
-// import io.cucumber.java.Scenario;
-// import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import io.cucumber.java.Scenario;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.base.BaseClass;
 
-// import org.testng.annotations.BeforeTest;
-// import org.testng.annotations.AfterTest;
-// import org.testng.annotations.BeforeMethod;
-// import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.reporters.Files;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import com.aventstack.extentreports.MediaEntityBuilder;
 
-// import java.io.File;
-// import java.io.IOException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.testng.annotations.AfterMethod;
 
-// import org.apache.commons.io.FileUtils;
-// import org.openqa.selenium.OutputType;
-// import org.openqa.selenium.TakesScreenshot;
-// import org.openqa.selenium.WebDriver;
+import java.io.File;
+import java.io.IOException;
 
 
-// public class ExtentReportListener {
-//     private static ExtentReports extent;
-//     private static ThreadLocal<ExtentTest> testReport = new ThreadLocal<>();
-//     private WebDriver driver;
 
-//     @BeforeTest
-//     public void beforeScenario() {
-//         ExtentSparkReporter htmlReporter = new ExtentSparkReporter("target/extent-report.html");
-//         extent = new ExtentReports();
-//         extent.attachReporter(htmlReporter);
-//     }
+public class ExtentReportListener {
+    private static ExtentReports extent;
+    private static ThreadLocal<ExtentTest> testReport = new ThreadLocal<>();
 
-//     @BeforeMethod
-//     public void startTest(Scenario scenario) {
-//         testReport.set(extent.createTest(scenario.getName()));
-//         scenario.attach("Current Test", "text/plain", scenario.getName());
-//     }
-//     public static ExtentReports getExtent() {
-//         return extent;
-//     }
+    static {
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("target/extent-report.html");
+        extent = new ExtentReports();
+        extent.attachReporter(htmlReporter);
+    }
 
-//     @AfterMethod
-//     public void afterScenario(Scenario scenario)throws IOException {
-//         if (scenario.isFailed()) {
-//             String screenshotPath = captureScreenshot(scenario.getName());
-//             testReport.get().fail(scenario.getName()).addScreenCaptureFromPath(screenshotPath);
-//         } else {
-//             testReport.get().pass("Test passed");
-//         }
-//     }
-//     @AfterTest
-//     public void afterTest() {
-//         extent.flush();
-//     }
 
-//     public String captureScreenshot(String scenarioName)throws IOException {
-//         TakesScreenshot screenshot = (TakesScreenshot) driver;
-//         byte[] screenshotBytes = screenshot.getScreenshotAs(OutputType.BYTES);
-//         String screenshotPath = "target/screenshots/" + scenarioName + ".png";
-//         File screenshotFile = new File(screenshotPath);
-//         FileUtils.writeByteArrayToFile(screenshotFile, screenshotBytes);
-//         return screenshotPath;
-//     }
+    public void startTest(Scenario scenario) {
+        ExtentTest test = extent.createTest(scenario.getName());
+        testReport.set(test);
+    }
+
+    public void afterScenario(Scenario scenario){
+        if (scenario.isFailed()) {
+            testReport.get().fail("Test failed");
+        } else {
+            testReport.get().pass("Test passed");
+        }
+    }
+    public void attachScreenshot(String screenshotPath) {
+        try {
+            testReport.get().fail("Test failed", MediaEntityBuilder.createScreenCaptureFromPath("."+ screenshotPath).build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void afterTest() {
+        extent.flush();
+    }
     
-// }
+}
