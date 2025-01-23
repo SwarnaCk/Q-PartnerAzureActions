@@ -1,6 +1,9 @@
 package com.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,6 +14,7 @@ import com.utils.RandomDataGenerator;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 
@@ -43,6 +47,11 @@ public class BaseClass {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+    }
+    public void captureScreenshot(String testName) throws IOException {
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File destination = new File("target/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png");
+        Files.copy(screenshot.toPath(), destination.toPath());
     }
 
     @After

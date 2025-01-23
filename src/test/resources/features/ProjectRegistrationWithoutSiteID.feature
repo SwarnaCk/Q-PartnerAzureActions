@@ -1,5 +1,5 @@
 Feature: Project Registration
-
+  @SCRUM-TC-220
   Scenario: Successful project registration
     Given I am on the login page
     When I enter username
