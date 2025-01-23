@@ -1,7 +1,7 @@
 package com.utils;
     
-    import com.github.javafaker.Faker;
-    import org.json.simple.JSONObject;
+import com.github.javafaker.Faker;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -16,7 +16,8 @@ public class RandomDataGenerator {
     
     
         private static final Faker faker = new Faker();
-    
+        
+        @SuppressWarnings("unchecked")
         public static void generateRandomProjectData(String fileName) {
             JSONObject projectData = readExistingJson(fileName);
             String name=faker.app().name();
@@ -29,7 +30,7 @@ public class RandomDataGenerator {
                 e.printStackTrace();
             }
         }
-
+        
         private static JSONObject readExistingJson(String fileName) {
             JSONParser jsonParser = new JSONParser();
             try (FileReader reader = new FileReader("src/test/resources/testdata/" + fileName)) {

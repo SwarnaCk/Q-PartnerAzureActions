@@ -1,6 +1,5 @@
 package com.base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -8,23 +7,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.utils.RandomDataGenerator;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-
 import java.time.Duration;
 import java.util.HashMap;
 
 public class BaseClass {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    protected ChromeOptions options;
+    public static WebDriver driver;
+    public static WebDriverWait wait;
+    public ChromeOptions options;
 
-    @Before
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
         RandomDataGenerator.generateRandomProjectData("projectInfo.json");
         String downloadDir = System.getProperty("user.dir") + "/src/test/resources/pdfData";
-        options = new ChromeOptions();
+        options= new ChromeOptions();
 
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("download.default_directory", downloadDir); // Set the default download directory
@@ -45,7 +39,6 @@ public class BaseClass {
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
-    @After
     public void tearDown() {
         if (driver != null) {
             driver.quit();

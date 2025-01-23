@@ -1,7 +1,7 @@
 package com.stepdefinitions;
 
 import org.json.simple.JSONObject;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 import com.utils.ConfigReader;
 import com.utils.ReusableClass;
@@ -57,12 +57,13 @@ public class ProductRegistrationSteps {
 
     @Then("I should be logged in successfully")
     public void iShouldBeLoggedInSuccessfully() {
-        Assertions.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
+        Assert.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
     }
     @When("I click on project Registration Tab")
     public void iClickOnProjectRegTab() {
         homePage.selectNewProjectRegistration();
     }
+   
     @When("I fill the system information details")
     public void iFillTheSystemInformationDetails()throws InterruptedException {
         jsonObject=ConfigReader.readJsonFile("systemInfo.json");
@@ -115,15 +116,15 @@ public class ProductRegistrationSteps {
 
         // Verify Project Information
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
-        Assertions.assertEquals((String)projectInfoJson.get("projectName"), projectInfo.getProjectName(), "Project name mismatch");
+        Assert.assertEquals((String)projectInfoJson.get("projectName"), projectInfo.getProjectName(), "Project name mismatch");
         // Verify System Information
         JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
-        Assertions.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand(), "Brand mismatch");
+        Assert.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand(), "Brand mismatch");
         // Verify Project Owner Information
         JSONObject projectOwnerInfoJson = ConfigReader.readJsonFile("projectOwnerInfo.json");
-        Assertions.assertEquals((String)projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail(), "Owner email mismatch");
-        Assertions.assertEquals((String)projectOwnerInfoJson.get("ownerContactNum"), projectOwnerInfo.getOwnerContactNumber(), "Owner contact number mismatch");
-        Assertions.assertEquals((String)projectOwnerInfoJson.get("notes"), projectOwnerInfo.getNotes(), "Notes mismatch");
+        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail(), "Owner email mismatch");
+        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerContactNum"), projectOwnerInfo.getOwnerContactNumber(), "Owner contact number mismatch");
+        Assert.assertEquals((String)projectOwnerInfoJson.get("notes"), projectOwnerInfo.getNotes(), "Notes mismatch");
     }
 
     @Then("I click the submit button")
@@ -135,7 +136,7 @@ public class ProductRegistrationSteps {
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
         String actualProjectName=projectListTab.getProjectName();
         String expectedProjectName=(String)projectInfoJson.get("projectName");
-        Assertions.assertEquals(expectedProjectName, actualProjectName, "Project name mismatch");
+        Assert.assertEquals(expectedProjectName, actualProjectName, "Project name mismatch");
     }
 
     @When("I click on the download PDF button")
@@ -151,7 +152,7 @@ public class ProductRegistrationSteps {
     @Then("the PDF should contain the project name")
     public void validatePdfContent()throws Exception { 
         boolean containsProjectName = projectListTab.validatePdfContent("Test City");
-        Assertions.assertTrue(containsProjectName);
+        Assert.assertTrue(containsProjectName);
     }
 
     @Then("I close the PDF tab and switch back")
