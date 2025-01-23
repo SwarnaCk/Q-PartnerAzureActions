@@ -173,4 +173,6 @@ public void iSelectNoOptionInDropdownInSystemInformationPage() throws Exception 
         systemInfo.selectBrandUndePVInverter();
         systemInfo.clickBattery();
 }  
+    
 }
+
