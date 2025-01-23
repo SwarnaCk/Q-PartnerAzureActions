@@ -16,6 +16,7 @@ public class BaseClass {
     public ChromeOptions options;
 
     public void setUp() {
+        
         RandomDataGenerator.generateRandomProjectData("projectInfo.json");
         String downloadDir = System.getProperty("user.dir") + "/src/test/resources/pdfData";
         options= new ChromeOptions();
