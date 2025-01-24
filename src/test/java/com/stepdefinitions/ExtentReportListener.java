@@ -4,20 +4,10 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import io.cucumber.java.Scenario;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.base.BaseClass;
 
-import org.testng.annotations.BeforeTest;
-import org.testng.reporters.Files;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import com.aventstack.extentreports.MediaEntityBuilder;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.testng.annotations.AfterMethod;
 
-import java.io.File;
-import java.io.IOException;
 
 
 

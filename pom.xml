@@ -16,12 +16,6 @@
     <!-- https://mvnrepository.com/artifact/org.testng/testng -->
     
     <dependencies>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.10.2</version>
-            <scope>test</scope>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -39,7 +33,13 @@
         <artifactId>httpclient</artifactId>
         <version>4.5.13</version> <!-- Check for the latest version -->
     </dependency>
-
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-api</artifactId>
+    <version>5.11.4</version>
+    <scope>test</scope>
+</dependency>
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -48,11 +48,6 @@
         </dependency>
 
         <!-- JUnit 5 -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.10.2</version>
-        </dependency>
 
         <!-- Cucumber -->
         <dependency>
@@ -63,7 +58,7 @@
 
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-testng</artifactId>
+            <artifactId>cucumber-junit</artifactId>
             <version>7.20.1</version>
         </dependency>
         

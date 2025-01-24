@@ -1,15 +1,17 @@
 package com.runner;
 
-import io.cucumber.testng.CucumberOptions;
-import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.java.AfterAll;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 
 import java.io.File;
 
-import org.testng.annotations.AfterSuite;
+import org.junit.AfterClass;
+import org.junit.runner.RunWith;
 
 import com.aiointegration.ResultUploaderToAIOTest;
 
-
+@RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features",
                  glue = {"com.stepdefinitions","com.hooks"},
                  plugin = {
@@ -17,13 +19,10 @@ import com.aiointegration.ResultUploaderToAIOTest;
                         "html:target/cucumber-reports.html",
                         "json:target/cucumber-reports.json"
                 })
-public class TestRunner extends AbstractTestNGCucumberTests {
-        @AfterSuite
+public class TestRunner {
+    @AfterClass
     public static void uploadTestResultsAndScreenshots() {
         File cucumberJsonFile = new File("target/cucumber-reports.json");
-
-        // System.out.println("Cucumber JSON file path: " + cucumberJsonFile.getAbsolutePath());
-        // System.out.println("File exists: " + cucumberJsonFile.exists());
         if (cucumberJsonFile.exists()) {
             System.out.println("Uploading Cucumber JSON test results...");
             ResultUploaderToAIOTest uploader = new ResultUploaderToAIOTest();

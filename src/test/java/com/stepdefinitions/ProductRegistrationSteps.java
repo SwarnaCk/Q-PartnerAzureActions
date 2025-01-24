@@ -1,7 +1,8 @@
 package com.stepdefinitions;
 
 import org.json.simple.JSONObject;
-import org.testng.Assert;
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import com.utils.ConfigReader;
 import com.utils.ReusableClass;
@@ -57,7 +58,7 @@ public class ProductRegistrationSteps {
 
     @Then("I should be logged in successfully")
     public void iShouldBeLoggedInSuccessfully() {
-        Assert.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
+        Assertions.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
     }
     @When("I click on project Registration Tab")
     public void iClickOnProjectRegTab() {
@@ -116,15 +117,15 @@ public class ProductRegistrationSteps {
 
         // Verify Project Information
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
-        Assert.assertEquals((String)projectInfoJson.get("projectName"), projectInfo.getProjectName(), "Project name mismatch");
+        Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJson.get("projectName"));
         // Verify System Information
         JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
-        Assert.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand(), "Brand mismatch");
+        Assert.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand());
         // Verify Project Owner Information
         JSONObject projectOwnerInfoJson = ConfigReader.readJsonFile("projectOwnerInfo.json");
-        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail(), "Owner email mismatch");
-        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerContactNum"), projectOwnerInfo.getOwnerContactNumber(), "Owner contact number mismatch");
-        Assert.assertEquals((String)projectOwnerInfoJson.get("notes"), projectOwnerInfo.getNotes(), "Notes mismatch");
+        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail());
+        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerContactNum"), projectOwnerInfo.getOwnerContactNumber());
+        Assert.assertEquals((String)projectOwnerInfoJson.get("notes"), projectOwnerInfo.getNotes());
     }
 
     @Then("I click the submit button")
