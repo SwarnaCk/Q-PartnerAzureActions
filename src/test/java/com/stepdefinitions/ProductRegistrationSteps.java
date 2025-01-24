@@ -117,7 +117,7 @@ public class ProductRegistrationSteps {
 
         // Verify Project Information
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
-m         Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJson.get("projectName"));
+        Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJson.get("projectName"));
         // Verify System Information
         JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
         Assert.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand());
@@ -137,7 +137,7 @@ m         Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJ
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
         String actualProjectName=projectListTab.getProjectName();
         String expectedProjectName=(String)projectInfoJson.get("projectName");
-        Assert.assertEquals(expectedProjectName, actualProjectName, "Project name mismatch");
+        Assert.assertEquals(expectedProjectName, actualProjectName);
     }
 
     @When("I click on the download PDF button")
@@ -153,7 +153,7 @@ m         Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJ
     @Then("the PDF should contain the project name")
     public void validatePdfContent()throws Exception { 
         boolean containsProjectName = projectListTab.validatePdfContent("Test City");
-        Assert.assertTrue(containsProjectName);
+        Assertions.assertTrue(containsProjectName);
     }
 
     @Then("I close the PDF tab and switch back")
