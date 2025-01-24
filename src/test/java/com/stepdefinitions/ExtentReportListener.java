@@ -29,14 +29,14 @@ public class ExtentReportListener {
 
     public void afterScenario(Scenario scenario){
         if (scenario.isFailed()) {
-            testReport.get().fail("Test failed");
+            //testReport.get().fail("Test failed");
         } else {
             testReport.get().pass("Test passed");
         }
     }
     public void attachScreenshot(String screenshotPath) {
         try {
-            testReport.get().fail("Test failed", MediaEntityBuilder.createScreenCaptureFromPath("."+ screenshotPath).build());
+            testReport.get().fail("Test failed", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         } catch (Exception e) {
             e.printStackTrace();
         }

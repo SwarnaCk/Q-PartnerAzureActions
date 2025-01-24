@@ -1,15 +1,10 @@
 package com.hooks;
 
-import java.io.File;
 import java.io.IOException;
 
-import org.junit.AfterClass;
-
-import com.aiointegration.ResultUploaderToAIOTest;
 import com.base.BaseClass;
 import com.stepdefinitions.ExtentReportListener;
 import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
