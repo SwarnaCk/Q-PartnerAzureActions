@@ -117,7 +117,7 @@ public class ProductRegistrationSteps {
 
         // Verify Project Information
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
-        Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJson.get("projectName"));
+m         Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJson.get("projectName"));
         // Verify System Information
         JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
         Assert.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand());
