@@ -1,8 +1,12 @@
 package com.pages;
 
+// import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+// import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+// import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.utils.ReusableClass;
 
@@ -12,7 +16,8 @@ public class SystemInfo {
     // Locators
     private By siteId = By.xpath("//input[@name='siteId']");
     private By productDrpDwn = By.xpath("//button[@name='haveProduct']");
-    private By productDrpDwnValue = By.xpath("//lightning-base-combobox-item[@data-value='No']");
+    private By productDrpDwnValue = By.xpath("//lightning-base-combobox-item[@data-value='Yes']");
+    private By productDrpDwnValueWithNo = By.xpath("//lightning-base-combobox-item[@data-value='No']");
     private By moduleDrpdwnValue = By.xpath("//lightning-formatted-text[contains(text(),'Qcells DC Solar panel')]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//lightning-base-combobox-item//span[text()='NO']");
     private By brandDrpDwn = By.xpath("//select[@name='PanelBrand']");
     private By powerClassDrpDwn = By.xpath("//select[@name='PanelPowerClass']");
@@ -22,7 +27,8 @@ public class SystemInfo {
     private By rackingBrandDrpDwn = By.xpath("//select[@name='RackingBrand']");
     private By essProductDrpdwn = By.xpath("//lightning-formatted-text[contains(text(),'ESS Products?')]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//button");
     private By essProduct = By.xpath("//lightning-formatted-text[contains(text(),'ESS Products?')]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//lightning-base-combobox-item//span[text()='No']");
-
+    private By typeDropdown = By.xpath("//select[@name=\"PanelType\"]");
+    private By productGeneration = By.xpath("//select[@name=\"PanelGeneration\"]");
     private By nextBtn= By.xpath("//div[@class='btnCls']//button[contains(text(),'Next')]");
     private By productdropdown = By.xpath("//button[@name=\"yesNoPicklist\"]");
     private By solarpanneldropdown = By.xpath("(//button[@name=\"haveProduct\"])[1]");
@@ -30,7 +36,9 @@ public class SystemInfo {
     private By brandDropdownUnderPVInverter = By.xpath("//select[@name=\"PVInvertorBrand\"]");
     private By batteryDropdown = By.xpath("//span[text()=\"Battery\"]");
     private By nextButton = By.xpath("//button[@title=\"NavigatetoSystemInformation\"]");
-
+    private By model = By.xpath("//select[@name=\"PanelModel\"]");
+    private By powerClassDropdown = By.xpath("//select[@name=\"PanelPowerClass\"]");
+    // private By powerClassSelection = By.xpath("//select[@name=\"PanelPowerClass\"]/option[@value=\"235\"]");
     public SystemInfo(ReusableClass reusable) {
         this.reusable = reusable;
     }
@@ -47,6 +55,26 @@ public class SystemInfo {
     public void selectProductDropdown() {
         reusable.click(productDrpDwn);
         reusable.click(productDrpDwnValue);
+    }
+    public void selectPowerclassDropdown(String options) {
+        WebElement dropdown = reusable.findElement(powerClassDropdown);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(options);
+    }
+    public void selectProductGenerationDropdown(String options) {
+        WebElement dropdown = reusable.findElement(productGeneration);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(options);
+    }
+    public void selectTypeDropdown(String options) {
+        WebElement dropdown = reusable.findElement(typeDropdown);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(options);
+    }
+    public void selectModelDropdown(String options) {
+        WebElement dropdown = reusable.findElement(model);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(options);
     }
     public void selectBrand(String options) {
         WebElement dropdown = reusable.findElement(brandDrpDwn);
@@ -77,6 +105,11 @@ public class SystemInfo {
         reusable.click(productdropdown);
         reusable.click(productDrpDwnValue);
     }
+    public void selectProductWithNoOption() {
+        reusable.click(productdropdown);
+        reusable.click(productDrpDwnValueWithNo);
+    }
+    
     public void selectModule() throws InterruptedException{
         reusable.click(solarpanneldropdown);   
         Thread.sleep(2000);    
@@ -97,8 +130,28 @@ public class SystemInfo {
     }
     public void clickBattery() {
         reusable.click(batteryDropdown);
-        reusable.click(nextButton);
         
     }
-    
+    public boolean isModelsVisible( ){
+        return reusable.isElementLocated(model);
+    }
+    public boolean isProductGenerationVisible(){
+        return reusable.isElementLocated(productGeneration);
+    }
+    public boolean isRackingVisible(){
+        return reusable.isElementLocated(rackingField);
+        
+    }
+    public boolean isRegistrationNoVisible(){
+        return reusable.isElementLocated(regNumberField);
+    }
+    public boolean isSiteIDVisible(){
+        return reusable.isElementLocated(siteId);
+    }
+    public boolean isTypeVisible(){
+        return reusable.isElementLocated(typeDropdown);
+    }
+    public void clickNextBtn() {
+        reusable.click(nextButton);
+    }
 }

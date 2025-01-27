@@ -1,6 +1,6 @@
 package com.runner;
 
-import io.cucumber.java.AfterAll;
+// import io.cucumber.java.AfterAll;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
@@ -18,7 +18,7 @@ import com.aiointegration.ResultUploaderToAIOTest;
                         "pretty", 
                         "html:target/cucumber-reports.html",
                         "json:target/cucumber-reports.json"
-                })
+                })               
 public class TestRunner {
     @AfterClass
     public static void uploadTestResultsAndScreenshots() {

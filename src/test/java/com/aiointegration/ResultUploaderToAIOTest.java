@@ -5,7 +5,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import java.io.FileInputStream;
 import java.io.IOException;
-
+// import java.util.Base64;
 
 public class ResultUploaderToAIOTest {
 
@@ -52,8 +52,29 @@ public class ResultUploaderToAIOTest {
             e.printStackTrace();
         }
     }
-}
-
-
-
-
+    
+    public static void uploadScreenshotToJira(String screenshot,String name) {
+        // String apiUrlWithParams = API_URL.replace("{projectKey}", PROJECT_KEY)
+        //                                   .replace("{testCycleKey}", TEST_CYCLE_KEY);
+        Response response = RestAssured
+                    .given()
+                    .header("Authorization", "Basic " + AUTH_TOKEN) 
+                    .multiPart("file", screenshot)  
+                    .formParam("createNewRun", "true")
+                    .formParam("bddForceUpdateCase", "true")
+                    .formParam("updateDatasets", "true")
+                    .formParam("type", "Cucumber")
+                    .when()
+                    // .post(API_URL + "/rest/api/2/issue/" + PROJECT_KEY + "/attachments")  
+                    .post(API_URL.replace("{projectKey}", PROJECT_KEY).replace("{testCycleKey}", TEST_CYCLE_KEY))
+                    .then()
+                    .extract().response();
+            int statusCode = response.getStatusCode();
+        
+                    if (statusCode == 200 || statusCode == 201) {
+                        System.out.println("Screenshots uploaded successfully!");
+                    } else {
+                        System.err.println("Failed to upload screenshot. Response Code: " + statusCode);
+                    }
+                } 
+    }

@@ -6,10 +6,12 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 import com.base.BaseClass;
 
-
+// import io.cucumber.messages.types.Duration;
 public class ReusableClass extends BaseClass {
     public void navigateTo(String url) {
         driver.get(url);
@@ -35,6 +37,24 @@ public class ReusableClass extends BaseClass {
     public void clickUsingJavaScript(By locator) {
         WebElement element = waitForElementVisible(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    }
+    public boolean isElementVisible(By locator) {
+        try {
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1000));
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return element != null && element.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public boolean isElementLocated(By locator) {
+        try {
+            // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1000));
+            WebElement element = waitForLessTime.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return element != null && element.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
     public WebElement waitForElementClickable(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
@@ -65,7 +85,7 @@ public class ReusableClass extends BaseClass {
         wait.until(webDriver -> ((org.openqa.selenium.JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
     }
-    public void goToNextPage(By nextBtn) {
-        click(nextBtn);
+    public void goToNextPage(By locator) {
+        click(locator);
     }
 }

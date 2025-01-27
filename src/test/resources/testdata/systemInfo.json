@@ -4,5 +4,9 @@
     "powerClass": "230",
     "numberOfPanels": "20",
     "registrationNumber": "878737",
-    "rackingBrand":"Ironridge"
+    "rackingBrand":"Ironridge",
+    "type":"Other",
+    "productGeneration":"Other",
+    "model":"Other"
+
 }

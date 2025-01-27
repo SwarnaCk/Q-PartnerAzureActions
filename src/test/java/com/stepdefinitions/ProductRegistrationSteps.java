@@ -71,6 +71,11 @@ public class ProductRegistrationSteps {
         jsonObject.get("jsonObject");
         systemInfo.enterSiteId((String)jsonObject.get("siteId"));
         systemInfo.selectProductDropdown();
+        systemInfo.selectPowerclassDropdown((String)jsonObject.get("powerClass"));
+        systemInfo.selectTypeDropdown((String)jsonObject.get("type"));
+        Thread.sleep(2000);
+        systemInfo.selectProductGenerationDropdown((String)jsonObject.get("productGeneration"));
+        systemInfo.selectModelDropdown((String)jsonObject.get("model"));
         systemInfo.selectBrand((String)jsonObject.get("brand"));
         Thread.sleep(2000);
         systemInfo.selectPowerClass();
@@ -164,7 +169,7 @@ public class ProductRegistrationSteps {
 public void iSelectNoOptionInDropdownInSystemInformationPage() throws Exception {
         jsonObject=ConfigReader.readJsonFile("systemInfo.json");
         jsonObject.get("jsonObject");
-        systemInfo.selectProduct();
+        systemInfo.selectProductWithNoOption();
         systemInfo.selectModule ();
         systemInfo.selectBrand((String)jsonObject.get("brand"));
         systemInfo.selectPowerClass();
@@ -174,6 +179,18 @@ public void iSelectNoOptionInDropdownInSystemInformationPage() throws Exception 
         systemInfo.selectBrandUndePVInverter();
         systemInfo.clickBattery();
 }  
+@And("I am not able to see some fields after selecting 'No' option")
+public void somefieldsnotvisible()
+{   
+    Assertions.assertFalse(systemInfo.isSiteIDVisible());
+    Assertions.assertFalse(systemInfo.isTypeVisible());
+    Assertions.assertFalse(systemInfo.isProductGenerationVisible());
+    Assertions.assertFalse(systemInfo.isModelsVisible());
+    Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
+    Assertions.assertFalse(systemInfo.isRackingVisible());
+    systemInfo.clickNextBtn();
+    
+}
     
 }
 

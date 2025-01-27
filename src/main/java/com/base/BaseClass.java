@@ -12,13 +12,14 @@ import com.utils.RandomDataGenerator;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+// import java.nio.file.Files;
 import java.time.Duration;
 import java.util.HashMap;
 
 public class BaseClass {
     public static WebDriver driver;
     public static WebDriverWait wait;
+    public static WebDriverWait waitForLessTime;
     public ChromeOptions options;
 
     public void setUp() {
@@ -44,6 +45,7 @@ public class BaseClass {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        waitForLessTime=new WebDriverWait(driver, Duration.ofSeconds(2));
     }
     public static String captureScreenshot(String testName) throws IOException {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
