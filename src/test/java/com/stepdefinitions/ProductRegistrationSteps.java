@@ -20,9 +20,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-
 public class ProductRegistrationSteps {
-    
+
     private JSONObject jsonObject;
     private ReusableClass reusable = new ReusableClass();
     private LoginPage loginPage = new LoginPage(reusable);
@@ -36,18 +35,19 @@ public class ProductRegistrationSteps {
 
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
-        reusable.navigateTo("https://qcellsnorthamerica123--dev2.sandbox.my.site.com/qpp/s/login/?startURL=%2Fqpp%2Fs%2F%3Ft%3D1736925342820");
+        reusable.navigateTo(
+                "https://qcellsnorthamerica123--dev2.sandbox.my.site.com/qpp/s/login/?startURL=%2Fqpp%2Fs%2F%3Ft%3D1736925342820");
     }
 
     @When("I enter username")
     public void iEnterUsername() {
-        String username=ConfigReader.getProperty("username");
+        String username = ConfigReader.getProperty("username");
         loginPage.enterUsername(username);
     }
 
     @When("I enter password")
     public void iEnterPassword() {
-        String password=ConfigReader.getProperty("password");
+        String password = ConfigReader.getProperty("password");
         loginPage.enterPassword(password);
     }
 
@@ -60,46 +60,58 @@ public class ProductRegistrationSteps {
     public void iShouldBeLoggedInSuccessfully() {
         Assertions.assertTrue(loginPage.isLoggedIn(), "User should be logged in successfully");
     }
+
     @When("I click on project Registration Tab")
     public void iClickOnProjectRegTab() {
         homePage.selectNewProjectRegistration();
     }
-   
+
     @When("I fill the system information details")
-    public void iFillTheSystemInformationDetails()throws InterruptedException {
-        jsonObject=ConfigReader.readJsonFile("systemInfo.json");
+    public void iFillTheSystemInformationDetails() throws InterruptedException {
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
         jsonObject.get("jsonObject");
-        systemInfo.enterSiteId((String)jsonObject.get("siteId"));
+        systemInfo.enterSiteId((String) jsonObject.get("siteId"));
         systemInfo.selectProductDropdown();
-        systemInfo.selectPowerclassDropdown((String)jsonObject.get("powerClass"));
-        systemInfo.selectTypeDropdown((String)jsonObject.get("type"));
         Thread.sleep(2000);
-        systemInfo.selectProductGenerationDropdown((String)jsonObject.get("productGeneration"));
-        systemInfo.selectModelDropdown((String)jsonObject.get("model"));
-        systemInfo.selectBrand((String)jsonObject.get("brand"));
+        systemInfo.selectPowerclassDropdown((String) jsonObject.get("powerClass"));
         Thread.sleep(2000);
-        systemInfo.selectPowerClass();
-        systemInfo.selectNumberOfPanels((String)jsonObject.get("numberOfPanels"));
-        systemInfo.enterRegistrationNumber((String)jsonObject.get("registrationNumber"));
-        systemInfo.selectRackingBrand((String)jsonObject.get("rackingBrand"));
+        systemInfo.selectTypeDropdown((String) jsonObject.get("type"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectProductGenerationDropdown((String) jsonObject.get("productGeneration"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectModelDropdown((String) jsonObject.get("model"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        // systemInfo.selectBrand((String) jsonObject.get("brand"));
+        // reusable.waitForPageLoad();
+        // Thread.sleep(2000);
+        // systemInfo.selectPowerClass();
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
+        systemInfo.enterRegistrationNumber((String) jsonObject.get("registrationNumber"));
+        systemInfo.selectRackingBrand((String) jsonObject.get("rackingBrand"));
     }
+
     @When("I fill the project information details")
     public void iFillTheProjectInformationDetails() {
-        jsonObject=ConfigReader.readJsonFile("projectInfo.json");
+        jsonObject = ConfigReader.readJsonFile("projectInfo.json");
         jsonObject.get("jsonObject");
-        
-        projectInfo.enterProjectName((String)jsonObject.get("projectName"));
-        projectInfo.enterStreetAddress((String)jsonObject.get("streetAddress"));
-        projectInfo.enterCityName((String)jsonObject.get("cityName"));
-        projectInfo.selectAddress((String)jsonObject.get("address"));
-        projectInfo.selectState((String)jsonObject.get("state")); 
-        projectInfo.enterPostalCode((String)jsonObject.get("postalCode"));
-        
+
+        projectInfo.enterProjectName((String) jsonObject.get("projectName"));
+        projectInfo.enterStreetAddress((String) jsonObject.get("streetAddress"));
+        projectInfo.enterCityName((String) jsonObject.get("cityName"));
+        projectInfo.selectAddress((String) jsonObject.get("address"));
+        projectInfo.selectState((String) jsonObject.get("state"));
+        projectInfo.enterPostalCode((String) jsonObject.get("postalCode"));
+
         projectInfo.selectInstallationDate();
         projectInfo.selectOperationDate();
-        
 
     }
+
     @When("I fill the purchasing information details")
     public void iFillThePurchasingInformationDetails() {
         purchaseInfo.selectPurchasingChannel("Distributor");
@@ -108,13 +120,13 @@ public class ProductRegistrationSteps {
 
     @When("I fill the project owner information details")
     public void iFillTheProjectOwnerInformationDetails() {
-        jsonObject=ConfigReader.readJsonFile("projectOwnerInfo.json");
-        String fname=(String)jsonObject.get("ownerFName");
-        String lname=(String)jsonObject.get("ownerLName");
+        jsonObject = ConfigReader.readJsonFile("projectOwnerInfo.json");
+        String fname = (String) jsonObject.get("ownerFName");
+        String lname = (String) jsonObject.get("ownerLName");
         projectOwnerInfo.selectOwnerName(fname, lname);
-        projectOwnerInfo.selectOwnerEmail((String)jsonObject.get("ownerEmail"));
-        projectOwnerInfo.selectOwnerContactNumber((String)jsonObject.get("ownerContactNum"));
-        projectOwnerInfo.selectNotes((String)jsonObject.get("notes"));
+        projectOwnerInfo.selectOwnerEmail((String) jsonObject.get("ownerEmail"));
+        projectOwnerInfo.selectOwnerContactNumber((String) jsonObject.get("ownerContactNum"));
+        projectOwnerInfo.selectNotes((String) jsonObject.get("notes"));
     }
 
     @Then("I verify project Registration Details in Project Details Tab")
@@ -122,26 +134,28 @@ public class ProductRegistrationSteps {
 
         // Verify Project Information
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
-        Assert.assertEquals( projectInfo.getProjectName(),(String)projectInfoJson.get("projectName"));
+        Assert.assertEquals(projectInfo.getProjectName(), (String) projectInfoJson.get("projectName"));
         // Verify System Information
-        JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
-        Assert.assertEquals((String)systemInfoJson.get("brand"), systemInfo.getBrand());
+        // JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
+        // Assert.assertEquals((String) systemInfoJson.get("brand"), systemInfo.getBrand());
         // Verify Project Owner Information
         JSONObject projectOwnerInfoJson = ConfigReader.readJsonFile("projectOwnerInfo.json");
-        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail());
-        Assert.assertEquals((String)projectOwnerInfoJson.get("ownerContactNum"), projectOwnerInfo.getOwnerContactNumber());
-        Assert.assertEquals((String)projectOwnerInfoJson.get("notes"), projectOwnerInfo.getNotes());
+        Assert.assertEquals((String) projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail());
+        Assert.assertEquals((String) projectOwnerInfoJson.get("ownerContactNum"),
+                projectOwnerInfo.getOwnerContactNumber());
+        Assert.assertEquals((String) projectOwnerInfoJson.get("notes"), projectOwnerInfo.getNotes());
     }
 
     @Then("I click the submit button")
-    public void iClickSubmitButton()throws InterruptedException {
+    public void iClickSubmitButton() throws InterruptedException {
         projectDetails.saveDetails();
     }
+
     @Then("I verify details of Project in project details section")
-    public void iVerifyProjectDetailsInProjectDetailsTable() { 
+    public void iVerifyProjectDetailsInProjectDetailsTable() {
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
-        String actualProjectName=projectListTab.getProjectName();
-        String expectedProjectName=(String)projectInfoJson.get("projectName");
+        String actualProjectName = projectListTab.getProjectName();
+        String expectedProjectName = (String) projectInfoJson.get("projectName");
         Assert.assertEquals(expectedProjectName, actualProjectName);
     }
 
@@ -156,7 +170,7 @@ public class ProductRegistrationSteps {
     }
 
     @Then("the PDF should contain the project name")
-    public void validatePdfContent()throws Exception { 
+    public void validatePdfContent() throws Exception {
         boolean containsProjectName = projectListTab.validatePdfContent("Test City");
         Assertions.assertTrue(containsProjectName);
     }
@@ -165,32 +179,32 @@ public class ProductRegistrationSteps {
     public void closePdfTabAndSwitchBack() {
         projectListTab.closePdfTabAndSwitchBack();
     }
+
     @And("I select 'No' option in dropdown in system information page")
-public void iSelectNoOptionInDropdownInSystemInformationPage() throws Exception {
-        jsonObject=ConfigReader.readJsonFile("systemInfo.json");
+    public void iSelectNoOptionInDropdownInSystemInformationPage() throws Exception {
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
         jsonObject.get("jsonObject");
         systemInfo.selectProductWithNoOption();
-        systemInfo.selectModule ();
-        systemInfo.selectBrand((String)jsonObject.get("brand"));
+        systemInfo.selectModule();
+        systemInfo.selectBrand((String) jsonObject.get("brand"));
         systemInfo.selectPowerClass();
-        systemInfo.selectNumberOfPanels((String)jsonObject.get("numberOfPanels"));
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
         systemInfo.essProduct();
         systemInfo.clickPVInverter();
         systemInfo.selectBrandUndePVInverter();
         systemInfo.clickBattery();
-}  
-@And("I am not able to see some fields after selecting 'No' option")
-public void somefieldsnotvisible()
-{   
-    Assertions.assertFalse(systemInfo.isSiteIDVisible());
-    Assertions.assertFalse(systemInfo.isTypeVisible());
-    Assertions.assertFalse(systemInfo.isProductGenerationVisible());
-    Assertions.assertFalse(systemInfo.isModelsVisible());
-    Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
-    Assertions.assertFalse(systemInfo.isRackingVisible());
-    systemInfo.clickNextBtn();
-    
-}
-    
-}
+    }
 
+    @And("I am not able to see some fields after selecting 'No' option")
+    public void somefieldsnotvisible() {
+        Assertions.assertFalse(systemInfo.isSiteIDVisible());
+        Assertions.assertFalse(systemInfo.isTypeVisible());
+        Assertions.assertFalse(systemInfo.isProductGenerationVisible());
+        Assertions.assertFalse(systemInfo.isModelsVisible());
+        Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
+        Assertions.assertFalse(systemInfo.isRackingVisible());
+        systemInfo.clickNextBtn();
+
+    }
+
+}

@@ -62,6 +62,7 @@ public class SystemInfo {
         select.selectByVisibleText(options);
     }
     public void selectProductGenerationDropdown(String options) {
+        reusable.doubleClickOnElement(productGeneration);
         WebElement dropdown = reusable.findElement(productGeneration);
         Select select = new Select(dropdown);
         select.selectByVisibleText(options);
