@@ -21,9 +21,9 @@ public class ResultUploaderToAIOTest {
     private static final String AIO_TOKEN = ConfigReader.loadEnv("AIO_TOKEN") != null
             ? ConfigReader.loadEnv("AIO_TOKEN")
             : System.getenv("AIO_TOKEN");
-    private static final String GITHUB_TOKEN = ConfigReader.loadEnv("GITHUB_TOKEN") != null
-            ? ConfigReader.loadEnv("GITHUB_TOKEN")
-            : System.getenv("GITHUB_TOKEN");
+    private static final String GIT_TOKEN = ConfigReader.loadEnv("GIT_TOKEN") != null
+            ? ConfigReader.loadEnv("GIT_TOKEN")
+            : System.getenv("GIT_TOKEN");
     private static final String GITHUB_REPO = "saikat-ck/QPartner-POC";
 
     public String getGitHubActionVariable(String variableName) {
@@ -32,7 +32,7 @@ public class ResultUploaderToAIOTest {
         try {
             Response response = RestAssured
                     .given()
-                    .header("Authorization", "Bearer " + GITHUB_TOKEN)
+                    .header("Authorization", "Bearer " + GIT_TOKEN)
                     .when()
                     .get(apiUrl)
                     .then()
