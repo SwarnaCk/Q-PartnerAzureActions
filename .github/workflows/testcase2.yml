@@ -5,7 +5,7 @@ on:
 
 jobs:
   test_case_1:
-    name: Run Test Case 1
+    name: Successful product registration with site id
     runs-on: macos-latest  
     steps:
     - name: Check out repository code
@@ -17,21 +17,21 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Run Test Case 1
+    - name: Successful product registration with site id
       run: mvn -Dtest=ProductRegistrationSteps test 
 
-  # test_case_2:
-  #   name: Run Test Case 2
-  #   runs-on: macos-latest  
-  #   steps:
-  #   - name: Check out repository code
-  #     uses: actions/checkout@v2
+  test_case_2:
+    name: Project Registration without site id
+    runs-on: macos-latest  
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
 
-  #   - name: Set up JDK 17
-  #     uses: actions/setup-java@v2
-  #     with:
-  #       java-version: '17'
-  #       distribution: 'temurin'
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-  #   - name: Run Test Case 2
-  #     run: mvn -Dtest=TestClassName2 test # Replace TestClassName2 with your actual test case class name
+    - name: Project Registration without site id
+      run: mvn -Dtest=TestClassName2 test # Replace TestClassName2 with your actual test case class name

@@ -84,10 +84,6 @@ public class ProductRegistrationSteps {
         systemInfo.selectModelDropdown((String) jsonObject.get("model"));
         reusable.waitForPageLoad();
         Thread.sleep(2000);
-        // systemInfo.selectBrand((String) jsonObject.get("brand"));
-        // reusable.waitForPageLoad();
-        // Thread.sleep(2000);
-        // systemInfo.selectPowerClass();
         reusable.waitForPageLoad();
         Thread.sleep(2000);
         systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
@@ -131,14 +127,8 @@ public class ProductRegistrationSteps {
 
     @Then("I verify project Registration Details in Project Details Tab")
     public void iVerifyProjectRegistrationDetailsInProjectDetailsTab() {
-
-        // Verify Project Information
         JSONObject projectInfoJson = ConfigReader.readJsonFile("projectInfo.json");
         Assert.assertEquals(projectInfo.getProjectName(), (String) projectInfoJson.get("projectName"));
-        // Verify System Information
-        // JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
-        // Assert.assertEquals((String) systemInfoJson.get("brand"), systemInfo.getBrand());
-        // Verify Project Owner Information
         JSONObject projectOwnerInfoJson = ConfigReader.readJsonFile("projectOwnerInfo.json");
         Assert.assertEquals((String) projectOwnerInfoJson.get("ownerEmail"), projectOwnerInfo.getOwnerEmail());
         Assert.assertEquals((String) projectOwnerInfoJson.get("ownerContactNum"),
@@ -174,6 +164,11 @@ public class ProductRegistrationSteps {
         boolean containsProjectName = projectListTab.validatePdfContent("Test City");
         Assertions.assertTrue(containsProjectName);
     }
+    @Then("the PDF should contain the home warranty certificate name")
+    public void validateHomeWarrantyPdfCertificate() throws Exception {
+        boolean containsProjectName = projectListTab.validatePdfContent("HomeOwner Warranty Certificate");
+        Assertions.assertTrue(containsProjectName);
+    }
 
     @Then("I close the PDF tab and switch back")
     public void closePdfTabAndSwitchBack() {
@@ -205,6 +200,49 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isRackingVisible());
         systemInfo.clickNextBtn();
 
+    }
+    @And ("I am on the system information page")
+    public void systemInformationTextVisible() {
+        Assertions.assertTrue(systemInfo.isSystemInformationTextVisible());
+    }
+    
+    @And ("I enter Site Id as 'Yes' option is seelected in product dropdown")
+    public void enterSiteId() {
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.enterSiteId((String) jsonObject.get("siteId"));
+    }
+    @And ("I fill model, powerclass, type ,product generation as 'Yes' option is selected in solar panel dropdown")
+    public void enterAllDetailsUndersolarPanel() throws Exception {
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.selectProductDropdown();
+        Thread.sleep(2000);
+        systemInfo.selectPowerclassDropdown((String) jsonObject.get("powerClass"));
+        Thread.sleep(2000);
+        systemInfo.selectTypeDropdown((String) jsonObject.get("type"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectProductGenerationDropdown((String) jsonObject.get("productGeneration"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectModelDropdown((String) jsonObject.get("model"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
+    }
+    @And ("I fill registration no as'Yes' option is selected in ESS product dropdown")
+    public void enterRegistrationNo() {
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.enterRegistrationNumber((String) jsonObject.get("registrationNumber"));
+    }
+    @And ("I cannot verify the battery status")
+    public void batteryStatusNotVisible() {
+        Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
+        systemInfo.clickNextBtn();
     }
 
 }

@@ -11,7 +11,7 @@ public class ResultUploaderToAIOTest {
 
     private static final String API_URL = "https://tcms.aiojiraapps.com/aio-tcms/api/v1/project/{projectKey}/testcycle/{testCycleKey}/import/results?type=Cucumber";
     private static final String PROJECT_KEY = "SCRUM";
-    private static final String TEST_CYCLE_KEY = "SCRUM-CY-27";
+    private static final String TEST_CYCLE_KEY = "SCRUM-CY-30";
     private static final String AUTH_TOKEN = "AioAuth N2YxMDM1NTItOWRkNy0zMDYyLWIyNjYtMDQxYWY5MzhlYjc1LjU3MWMyMTgzLTM3MGEtNGEzMy1iZGEzLTUyZTNmMTAzZjEyZA==";
 
     public void uploadTestResults(File cucumberJsonFile) {

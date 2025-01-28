@@ -15,6 +15,7 @@ public class SystemInfo {
 
     // Locators
     private By siteId = By.xpath("//input[@name='siteId']");
+    private By systemInformationText = By.xpath("//div[text()=\"System Information\"]");
     private By productDrpDwn = By.xpath("//button[@name='haveProduct']");
     private By productDrpDwnValue = By.xpath("//lightning-base-combobox-item[@data-value='Yes']");
     private By productDrpDwnValueWithNo = By.xpath("//lightning-base-combobox-item[@data-value='No']");
@@ -154,5 +155,11 @@ public class SystemInfo {
     }
     public void clickNextBtn() {
         reusable.click(nextButton);
+    }
+    public boolean isSystemInformationTextVisible() {
+        return reusable.isElementLocated(systemInformationText);
+    }
+    public  boolean isBatteryStatusVisible(){
+        return reusable.isElementLocated(batteryDropdown);
     }
 }
