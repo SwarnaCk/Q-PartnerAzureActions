@@ -18,7 +18,9 @@ import com.aiointegration.ResultUploaderToAIOTest;
                         "pretty", 
                         "html:target/cucumber-reports.html",
                         "json:target/cucumber-reports.json"
-                })               
+                }
+                
+                )               
 public class TestRunner {
     @AfterClass
     public static void uploadTestResultsAndScreenshots() {
