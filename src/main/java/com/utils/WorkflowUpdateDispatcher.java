@@ -64,14 +64,6 @@ public class WorkflowUpdateDispatcher {
                 setupJdk.put("with", Map.of("java-version", "17", "distribution", "temurin"));
                 steps.add(setupJdk);
 
-                // Run Selected Scenario step
-                Map<String, Object> runSelectedScenario = new LinkedHashMap<>();
-                runSelectedScenario.put("name", "Run Selected Scenario");
-                runSelectedScenario.put("env", Map.of("AIO_TOKEN", "${{ secrets.AIO_TOKEN }}"));
-                runSelectedScenario.put("run",
-                                "|\n        mvn clean test -Dcucumber.filter.name=\"${{ github.event.inputs.scenario }}\"");
-                steps.add(runSelectedScenario);
-
                 // Run Specific Test Case step
                 Map<String, Object> runSpecificTestCase = new LinkedHashMap<>();
                 runSpecificTestCase.put("name", "Run Specific Test Case");
@@ -80,15 +72,17 @@ public class WorkflowUpdateDispatcher {
                                 "AIO_TOKEN", "${{ secrets.AIO_TOKEN }}"));
                 runSpecificTestCase.put("if", "${{ github.event.inputs.scenario != 'All' }}");
                 runSpecificTestCase.put("run",
-                                "|\n        echo \"Running scenario by name: ${{ github.event.inputs.scenario }}\"\n        export AIO_TOKEN=\"${{ secrets.AIO_TOKEN }}\" && mvn clean test --no-transfer-progress -q -Dcucumber.filter.name=\"${{ github.event.inputs.scenario }}\"");
+                                "echo \"Running scenario by name: ${{ github.event.inputs.scenario }}\"\n" +
+                                                "export AIO_TOKEN=\"${{ secrets.AIO_TOKEN }}\" && mvn clean test --no-transfer-progress -q -Dcucumber.filter.name=\"${{ github.event.inputs.scenario }}\"");
                 steps.add(runSpecificTestCase);
 
                 // Run all tests step
                 Map<String, Object> runAllTests = new LinkedHashMap<>();
                 runAllTests.put("name", "Run all tests if no specific scenario is selected");
                 runAllTests.put("if", "${{ github.event.inputs.scenario == 'All' }}");
-                runAllTests.put("run",
-                                "|\n        export AIO_TOKEN=\"${{ secrets.AIO_TOKEN }}\" && \\\n        export GITHUB_TOKEN=\"${{ secrets.GIT_TOKEN }}\" && \\\n        mvn clean test --no-transfer-progress -q");
+                runAllTests.put("run", "export AIO_TOKEN=\"${{ secrets.AIO_TOKEN }}\" && \\\n" +
+                                "export GITHUB_TOKEN=\"${{ secrets.GIT_TOKEN }}\" && \\\n" +
+                                "mvn clean test --no-transfer-progress -q");
                 steps.add(runAllTests);
 
                 runTests.put("steps", steps);
