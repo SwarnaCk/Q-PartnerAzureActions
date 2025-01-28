@@ -14,24 +14,26 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      name: Checkout code
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
         distribution: temurin
+        java-version: '17'
     - name: Run Specific Test Case
       env:
-        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
       if: ${{ github.event.inputs.scenario != 'All' }}
       run: |-
         echo "Running scenario by name: ${{ github.event.inputs.scenario }}"
-        export AIO_TOKEN="${{ secrets.AIO_TOKEN }}" && mvn clean test --no-transfer-progress -q -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
+        export AIO_TOKEN="${{ secrets.AIO_TOKEN }}" && \
+        export GIT_TOKEN="${{ secrets.GIT_TOKEN }}" && \
+        mvn clean test --no-transfer-progress -q -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
     - name: Run all tests if no specific scenario is selected
       if: ${{ github.event.inputs.scenario == 'All' }}
       run: |-
         export AIO_TOKEN="${{ secrets.AIO_TOKEN }}" && \
-        export GITHUB_TOKEN="${{ secrets.GIT_TOKEN }}" && \
+        export GIT_TOKEN="${{ secrets.GIT_TOKEN }}" && \
         mvn clean test --no-transfer-progress -q

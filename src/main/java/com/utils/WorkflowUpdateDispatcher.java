@@ -68,12 +68,14 @@ public class WorkflowUpdateDispatcher {
                 Map<String, Object> runSpecificTestCase = new LinkedHashMap<>();
                 runSpecificTestCase.put("name", "Run Specific Test Case");
                 runSpecificTestCase.put("env", Map.of(
-                                "GITHUB_TOKEN", "${{ secrets.GIT_TOKEN }}",
+                                "GIT_TOKEN", "${{ secrets.GIT_TOKEN }}",
                                 "AIO_TOKEN", "${{ secrets.AIO_TOKEN }}"));
                 runSpecificTestCase.put("if", "${{ github.event.inputs.scenario != 'All' }}");
                 runSpecificTestCase.put("run",
                                 "echo \"Running scenario by name: ${{ github.event.inputs.scenario }}\"\n" +
-                                                "export AIO_TOKEN=\"${{ secrets.AIO_TOKEN }}\" && mvn clean test --no-transfer-progress -q -Dcucumber.filter.name=\"${{ github.event.inputs.scenario }}\"");
+                                                "export AIO_TOKEN=\"${{ secrets.AIO_TOKEN }}\" && \\\n" +
+                                                "export GIT_TOKEN=\"${{ secrets.GIT_TOKEN }}\" && \\\n" +
+                                                "mvn clean test --no-transfer-progress -q -Dcucumber.filter.name=\"${{ github.event.inputs.scenario }}\"");
                 steps.add(runSpecificTestCase);
 
                 // Run all tests step
@@ -81,7 +83,7 @@ public class WorkflowUpdateDispatcher {
                 runAllTests.put("name", "Run all tests if no specific scenario is selected");
                 runAllTests.put("if", "${{ github.event.inputs.scenario == 'All' }}");
                 runAllTests.put("run", "export AIO_TOKEN=\"${{ secrets.AIO_TOKEN }}\" && \\\n" +
-                                "export GITHUB_TOKEN=\"${{ secrets.GIT_TOKEN }}\" && \\\n" +
+                                "export GIT_TOKEN=\"${{ secrets.GIT_TOKEN }}\" && \\\n" +
                                 "mvn clean test --no-transfer-progress -q");
                 steps.add(runAllTests);
 

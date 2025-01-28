@@ -40,7 +40,7 @@ public class BaseClass {
         chromePrefs.put("plugins.always_open_pdf_externally", true);
 
         options.setExperimentalOption("prefs", chromePrefs);
-
+        options.addArguments("--headless"); // Headless
         options.addArguments("--disable-notifications"); // Disable browser pop-ups
         options.addArguments("--no-sandbox"); // Bypass OS-level security restrictions
         options.addArguments("--disable-extensions"); // Disable Chrome extensions
