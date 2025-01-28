@@ -1,57 +1,35 @@
 package com.hooks;
 
-// import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 
-// import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
-// import org.junit.AfterClass;
-
-import com.aiointegration.ResultUploaderToAIOTest;
 import com.base.BaseClass;
-// import com.github.javafaker.File;
-import com.stepdefinitions.ExtentReportListener;
 import com.utils.ScenarioExtractor;
 import com.utils.WorkflowUpdateDispacther;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
-// import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
 public class Hooks extends BaseClass {
 
-    private ExtentReportListener extentReportListener = new ExtentReportListener();
-
     @Before
-    public void runBeforeTest(Scenario scenario) {
+    public void runBeforeTest() {
         setUp();
-        extentReportListener.startTest(scenario);
     }
 
-    @After(order = 3)
-    public void runAfterTest(Scenario scenario) throws IOException {
+    @After
+    public void runAfterTest(Scenario scenario) {
         if (scenario.isFailed()) {
             String screenshotName = scenario.getName().replaceAll(" ", "_");
-            String screenshotPath = captureScreenshot(screenshotName);
-            String relPath = System.getProperty("user.dir") + screenshotPath;
-            extentReportListener.attachScreenshot(relPath);
-            // byte[] screenshotBytes = FileUtils.readFileToByteArray(new
-            // File(screenshotPath));
-            // scenario.attach(screenshotBytes, "image/png", scenario.getName());
-            uploadScreenshotToJira(screenshotPath, scenario.getName());
+            String base64Screenshot = captureScreenshot(screenshotName);
+            scenario.attach(Base64.getDecoder().decode(base64Screenshot), "image/png", screenshotName + ".png");
         }
-        extentReportListener.afterScenario(scenario);
-        extentReportListener.afterTest();
         tearDown();
-    }
-
-    private void uploadScreenshotToJira(String screenshotPath, String scenarioName) throws IOException {
-
-        ResultUploaderToAIOTest.uploadScreenshotToJira(screenshotPath, scenarioName);
-        // String screenshotFolderPath = System.getProperty("user.dir") +
-        // "/target/screenshots/";
     }
 
     @AfterAll(order = 2)
@@ -62,5 +40,10 @@ public class Hooks extends BaseClass {
     @AfterAll(order = 1)
     public static void updateWorkflowWithScenariosFromJSON() throws IOException {
         WorkflowUpdateDispacther.updateWorkflowWithAllScenarios();
+    }
+
+    private String captureScreenshot(String testName) {
+        byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        return Base64.getEncoder().encodeToString(screenshotBytes);
     }
 }
