@@ -257,5 +257,26 @@ public class ProductRegistrationSteps {
         Thread.sleep(3000);
         systemInfo.clickNextBtn();
     }
-
+    @And ("I am not able to see model, powerclass, type ,product generation field as 'No' option is selected in solar panel dropdown")
+    public void verifyModelPowerClassTypeField() throws InterruptedException {
+        Assertions.assertFalse(systemInfo.isSiteIDVisible());
+        Assertions.assertFalse(systemInfo.isTypeVisible());
+        Assertions.assertFalse(systemInfo.isProductGenerationVisible());
+        Assertions.assertFalse(systemInfo.isModelsVisible());
+        Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
+        Assertions.assertFalse(systemInfo.isRackingVisible());
+}
+    @And("I am not able to fill registration no as 'No' option is selected in ESS product dropdown")
+    public void notFillRegistrationNo() throws InterruptedException {
+        Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
+        Assertions.assertFalse(systemInfo.isRackingVisible());
+        systemInfo.clickPVInverter();
+        Thread.sleep(3000);
+        systemInfo.selectBrandUndePVInverter();
+}
+@And ("I select 'No' in the battery status")
+public   void selectNoFromBatteryStatus() {
+    systemInfo.clickBattery();
+    systemInfo.clickNextBtn();
+}
 }

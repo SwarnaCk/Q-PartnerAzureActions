@@ -1,3 +1,4 @@
 target/
 .vscode/
 src/test/resources/config.properties
+scenarios.json

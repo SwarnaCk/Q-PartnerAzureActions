@@ -1,0 +1,24 @@
+jobs:
+    run-tests:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+            name: Checkout code
+          - uses: actions/setup-java@v3
+            name: Set up JDK
+            with:
+                java-version: '17'
+                distribution: temurin
+          - run: mvn clean test -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
+            name: Run Selected Scenario
+name: Run Cucumber Tests
+'on':
+    workflow_dispatch:
+        inputs:
+            scenario:
+                options:
+                  - Successful product registration with site id
+                  - Successful project registration without site id
+                description: Select a scenario to run
+                type: choice
+                required: true

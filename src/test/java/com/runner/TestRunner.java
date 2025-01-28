@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import com.aiointegration.ResultUploaderToAIOTest;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features/ProductRegistrationWithoutESSProduct.feature",
+@CucumberOptions(features = "src/test/resources/features/ProductRegistrationWithoutESSProductWithoutBattery.feature",
                  glue = {"com.stepdefinitions","com.hooks"},
                  plugin = {
                         "pretty", 
@@ -33,4 +33,3 @@ public class TestRunner {
         }
     }
 }
-
