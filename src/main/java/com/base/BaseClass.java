@@ -23,10 +23,10 @@ public class BaseClass {
     public ChromeOptions options;
 
     public void setUp() {
-        
+
         RandomDataGenerator.generateRandomProjectData("projectInfo.json");
         String downloadDir = System.getProperty("user.dir") + "/src/test/resources/pdfData";
-        options= new ChromeOptions();
+        options = new ChromeOptions();
 
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("download.default_directory", downloadDir); // Set the default download directory
@@ -45,14 +45,18 @@ public class BaseClass {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        waitForLessTime=new WebDriverWait(driver, Duration.ofSeconds(2));
+        waitForLessTime = new WebDriverWait(driver, Duration.ofSeconds(2));
+
+        com.utils.FileUtils.clearDownloadDirectory(downloadDir);
     }
+
     public static String captureScreenshot(String testName) throws IOException {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         String destinationPath = "target/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png";
         File destination = new File(destinationPath);
         FileUtils.copyFile(screenshot, destination);
-        String path=destination.toPath().toAbsolutePath().normalize().toString().replace(System.getProperty("user.dir"), "");
+        String path = destination.toPath().toAbsolutePath().normalize().toString()
+                .replace(System.getProperty("user.dir"), "");
         System.out.println(path);
         return path;
     }

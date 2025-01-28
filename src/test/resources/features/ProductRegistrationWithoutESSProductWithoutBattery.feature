@@ -1,6 +1,6 @@
 Feature: Project Registration without ESS product and without Battery
 
-  Scenario: Successful product registration without battery
+  Scenario: Successful product registration without ESS product without battery
     Given I am on the login page
     When I enter username
     And I enter password
@@ -11,7 +11,6 @@ Feature: Project Registration without ESS product and without Battery
     And I enter Site Id as 'Yes' option is seelected in product dropdown
     And I fill model, powerclass, type ,product generation as 'Yes' option is selected in solar panel dropdown
     And I fill registration no as'No' option is selected in ESS product dropdown 
-    And I select 'No' in the battery status
     And I fill the project information details
     And I fill the purchasing information details
     And I fill the project owner information details

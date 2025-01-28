@@ -152,6 +152,11 @@ public class ProductRegistrationSteps {
     @When("I click on the download PDF button")
     public void clickDownloadPdfButton() {
         projectListTab.clickDownloadPdf();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @When("I switch to the PDF tab")
@@ -164,9 +169,10 @@ public class ProductRegistrationSteps {
         boolean containsProjectName = projectListTab.validatePdfContent("Test City");
         Assertions.assertTrue(containsProjectName);
     }
-    @Then("the PDF should contain the home warranty certificate name")
-    public void validateHomeWarrantyPdfCertificate() throws Exception {
-        boolean containsProjectName = projectListTab.validatePdfContent("HomeOwner Warranty Certificate");
+
+    @Then("the PDF should contain the 'Complete System' text")
+    public void validateCompleteSystemText() throws Exception {
+        boolean containsProjectName = projectListTab.validateCompleteSystemTextContent("Complete System");
         Assertions.assertTrue(containsProjectName);
     }
 
@@ -201,18 +207,20 @@ public class ProductRegistrationSteps {
         systemInfo.clickNextBtn();
 
     }
-    @And ("I am on the system information page")
+
+    @And("I am on the system information page")
     public void systemInformationTextVisible() {
         Assertions.assertTrue(systemInfo.isSystemInformationTextVisible());
     }
-    
-    @And ("I enter Site Id as 'Yes' option is seelected in product dropdown")
+
+    @And("I enter Site Id as 'Yes' option is seelected in product dropdown")
     public void enterSiteId() {
         jsonObject = ConfigReader.readJsonFile("systemInfo.json");
         jsonObject.get("jsonObject");
         systemInfo.enterSiteId((String) jsonObject.get("siteId"));
     }
-    @And ("I fill model, powerclass, type ,product generation as 'Yes' option is selected in solar panel dropdown")
+
+    @And("I fill model, powerclass, type ,product generation as 'Yes' option is selected in solar panel dropdown")
     public void enterAllDetailsUndersolarPanel() throws Exception {
         jsonObject = ConfigReader.readJsonFile("systemInfo.json");
         jsonObject.get("jsonObject");
@@ -233,18 +241,21 @@ public class ProductRegistrationSteps {
         Thread.sleep(2000);
         systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
     }
-    @And ("I fill registration no as'Yes' option is selected in ESS product dropdown")
+
+    @And("I fill registration no as'Yes' option is selected in ESS product dropdown")
     public void enterRegistrationNo() {
         jsonObject = ConfigReader.readJsonFile("systemInfo.json");
         jsonObject.get("jsonObject");
         systemInfo.enterRegistrationNumber((String) jsonObject.get("registrationNumber"));
     }
-    @And ("I cannot verify the battery status")
+
+    @And("I cannot verify the battery status")
     public void batteryStatusNotVisible() {
         Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
         systemInfo.clickNextBtn();
     }
-    @And ("I fill registration no as'No' option is selected in ESS product dropdown")
+
+    @And("I fill registration no as'No' option is selected in ESS product dropdown")
     public void verifyRegistrationField() throws InterruptedException {
         // Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
         systemInfo.essProduct();
@@ -257,7 +268,8 @@ public class ProductRegistrationSteps {
         Thread.sleep(3000);
         systemInfo.clickNextBtn();
     }
-    @And ("I am not able to see model, powerclass, type ,product generation field as 'No' option is selected in solar panel dropdown")
+
+    @And("I am not able to see model, powerclass, type ,product generation field as 'No' option is selected in solar panel dropdown")
     public void verifyModelPowerClassTypeField() throws InterruptedException {
         Assertions.assertFalse(systemInfo.isSiteIDVisible());
         Assertions.assertFalse(systemInfo.isTypeVisible());
@@ -265,7 +277,8 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isModelsVisible());
         Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
         Assertions.assertFalse(systemInfo.isRackingVisible());
-}
+    }
+
     @And("I am not able to fill registration no as 'No' option is selected in ESS product dropdown")
     public void notFillRegistrationNo() throws InterruptedException {
         Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
@@ -273,10 +286,25 @@ public class ProductRegistrationSteps {
         systemInfo.clickPVInverter();
         Thread.sleep(3000);
         systemInfo.selectBrandUndePVInverter();
-}
-@And ("I select 'No' in the battery status")
-public   void selectNoFromBatteryStatus() {
+    }
+    @And ("I select 'No' in the battery status")
+    public void selectNoFromBatteryStatus() throws InterruptedException {
+    reusable.waitForPageLoad();
+    Thread.sleep(2000);
     systemInfo.clickBattery();
     systemInfo.clickNextBtn();
-}
+    Thread.sleep(2000);
+    }
+    
+    @And("I am not able to see model, type, powerclass, product generation field as 'No' option is selected in solar panel dropdown")
+    public void verifyTypeModelPowerClassField() throws InterruptedException {
+        systemInfo.selectModule();
+        systemInfo.selectBrand((String) jsonObject.get("brand"));
+        systemInfo.selectPowerClass();
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
+        systemInfo.essProduct();
+        Assertions.assertFalse(systemInfo.isTypeVisible());
+        Assertions.assertFalse(systemInfo.isProductGenerationVisible());
+        Assertions.assertFalse(systemInfo.isModelsVisible());
+    }
 }
