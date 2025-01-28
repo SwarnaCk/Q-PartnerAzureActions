@@ -1,24 +1,45 @@
-jobs:
-    run-tests:
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v3
-          - uses: actions/setup-java@v3
-            with:
-                distribution: temurin
-                java-version: '17'
-            name: Set up JDK
-          - name: Run Selected Scenario
-            run: mvn clean test -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
-        runs-on: ubuntu-latest
-'on':
-    workflow_dispatch:
-        inputs:
-            scenario:
-                options:
-                  - Successful product registration with site id
-                  - Successful project registration without site id
-                required: true
-                type: choice
-                description: Select a scenario to run
 name: Run Cucumber Tests
+'on':
+  workflow_dispatch:
+    inputs:
+      scenario:
+        type: choice
+        description: Select a scenario to run
+        options:
+        - Successful product registration with site id
+        - Successful project registration without site id
+        - All
+        required: true
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      name: Checkout code
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: temurin
+    - name: Run Selected Scenario
+      env:
+        AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
+      run: |-
+        |
+                mvn clean test -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
+    - name: Run Specific Test Case
+      env:
+        AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      if: ${{ github.event.inputs.scenario != 'All' }}
+      run: |-
+        |
+                echo "Running scenario by name: ${{ github.event.inputs.scenario }}"
+                export AIO_TOKEN="${{ secrets.AIO_TOKEN }}" && mvn clean test --no-transfer-progress -q -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
+    - name: Run all tests if no specific scenario is selected
+      if: ${{ github.event.inputs.scenario == 'All' }}
+      run: |-
+        |
+                export AIO_TOKEN="${{ secrets.AIO_TOKEN }}" && \
+                export GITHUB_TOKEN="${{ secrets.GIT_TOKEN }}" && \
+                mvn clean test --no-transfer-progress -q

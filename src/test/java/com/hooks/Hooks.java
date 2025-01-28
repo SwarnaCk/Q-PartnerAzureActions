@@ -8,7 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 
 import com.base.BaseClass;
 import com.utils.ScenarioExtractor;
-import com.utils.WorkflowUpdateDispacther;
+import com.utils.WorkflowUpdateDispatcher;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
@@ -39,7 +39,7 @@ public class Hooks extends BaseClass {
 
     @AfterAll(order = 1)
     public static void updateWorkflowWithScenariosFromJSON() throws IOException {
-        WorkflowUpdateDispacther.updateWorkflowWithAllScenarios();
+        WorkflowUpdateDispatcher.updateWorkflowWithAllScenarios();
     }
 
     private String captureScreenshot(String testName) {

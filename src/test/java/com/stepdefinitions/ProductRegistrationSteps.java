@@ -50,7 +50,7 @@ public class ProductRegistrationSteps {
     @When("I enter password")
     public void iEnterPassword() {
         ResultUploaderToAIOTest resultUploaderToAioTest = new ResultUploaderToAIOTest();
-        String password = resultUploaderToAioTest.getGitHubActionVariable("USERNAME");
+        String password = resultUploaderToAioTest.getGitHubActionVariable("PASSWORD");
         loginPage.enterPassword(password);
     }
 
