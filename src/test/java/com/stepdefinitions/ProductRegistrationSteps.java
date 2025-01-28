@@ -155,6 +155,11 @@ public class ProductRegistrationSteps {
     @When("I click on the download PDF button")
     public void clickDownloadPdfButton() {
         projectListTab.clickDownloadPdf();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @When("I switch to the PDF tab")
@@ -168,9 +173,9 @@ public class ProductRegistrationSteps {
         Assertions.assertTrue(containsProjectName);
     }
 
-    @Then("the PDF should contain the home warranty certificate name")
-    public void validateHomeWarrantyPdfCertificate() throws Exception {
-        boolean containsProjectName = projectListTab.validatePdfContent("HomeOwner Warranty Certificate");
+    @Then("the PDF should contain the 'Complete System' text")
+    public void validateCompleteSystemText() throws Exception {
+        boolean containsProjectName = projectListTab.validateCompleteSystemTextContent("Complete System");
         Assertions.assertTrue(containsProjectName);
     }
 
@@ -253,4 +258,56 @@ public class ProductRegistrationSteps {
         systemInfo.clickNextBtn();
     }
 
+    @And("I fill registration no as'No' option is selected in ESS product dropdown")
+    public void verifyRegistrationField() throws InterruptedException {
+        // Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
+        systemInfo.essProduct();
+        Thread.sleep(3000);
+        systemInfo.clickPVInverter();
+        Thread.sleep(3000);
+        systemInfo.selectBrandUndePVInverter();
+        Thread.sleep(3000);
+        systemInfo.clickBattery();
+        Thread.sleep(3000);
+        systemInfo.clickNextBtn();
+    }
+
+    @And("I am not able to see model, powerclass, type ,product generation field as 'No' option is selected in solar panel dropdown")
+    public void verifyModelPowerClassTypeField() throws InterruptedException {
+        Assertions.assertFalse(systemInfo.isSiteIDVisible());
+        Assertions.assertFalse(systemInfo.isTypeVisible());
+        Assertions.assertFalse(systemInfo.isProductGenerationVisible());
+        Assertions.assertFalse(systemInfo.isModelsVisible());
+        Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
+        Assertions.assertFalse(systemInfo.isRackingVisible());
+    }
+
+    @And("I am not able to fill registration no as 'No' option is selected in ESS product dropdown")
+    public void notFillRegistrationNo() throws InterruptedException {
+        Assertions.assertFalse(systemInfo.isRegistrationNoVisible());
+        Assertions.assertFalse(systemInfo.isRackingVisible());
+        systemInfo.clickPVInverter();
+        Thread.sleep(3000);
+        systemInfo.selectBrandUndePVInverter();
+    }
+    @And ("I select 'No' in the battery status")
+    public void selectNoFromBatteryStatus() throws InterruptedException {
+    reusable.waitForPageLoad();
+    Thread.sleep(2000);
+    systemInfo.clickBattery();
+    systemInfo.clickNextBtn();
+    Thread.sleep(2000);
+    }
+    
+    @And("I am not able to see model, type, powerclass, product generation field as 'No' option is selected in solar panel dropdown")
+    public void verifyTypeModelPowerClassField() throws InterruptedException {
+        systemInfo.selectModule();
+        systemInfo.selectBrand((String) jsonObject.get("brand"));
+        systemInfo.selectPowerClass();
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
+        systemInfo.essProduct();
+        Assertions.assertFalse(systemInfo.isTypeVisible());
+        Assertions.assertFalse(systemInfo.isProductGenerationVisible());
+        Assertions.assertFalse(systemInfo.isModelsVisible());
+    }
 }

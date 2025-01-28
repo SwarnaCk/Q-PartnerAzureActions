@@ -23,7 +23,7 @@ public class ReusableClass extends BaseClass {
         return By.xpath("//div[contains(text(),'" + keyValue + "')]");
     }
     public WebDriver getDriver() {
-        return this.driver;
+        return BaseClass.driver;
     }
     public String getPageTitle() {
         return driver.getTitle();
