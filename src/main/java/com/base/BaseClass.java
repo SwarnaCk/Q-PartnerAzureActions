@@ -41,7 +41,13 @@ public class BaseClass {
 
         options.setExperimentalOption("prefs", chromePrefs);
 
-        options.addArguments("--disable-notifications");
+        options.addArguments("--disable-notifications"); // Disable browser pop-ups
+        options.addArguments("--no-sandbox"); // Bypass OS-level security restrictions
+        options.addArguments("--disable-extensions"); // Disable Chrome extensions
+        options.addArguments("--disable-blink-features=AutomationControlled"); // Avoid detection as bot
+        options.addArguments("--disable-dev-shm-usage"); // Reduce memory usage in Docker/Linux environments
+        options.addArguments("--remote-allow-origins=*"); // Allow cross-origin requests (if needed)
+
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
