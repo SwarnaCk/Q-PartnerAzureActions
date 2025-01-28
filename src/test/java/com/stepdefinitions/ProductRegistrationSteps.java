@@ -244,5 +244,18 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
         systemInfo.clickNextBtn();
     }
+    @And ("I fill registration no as'No' option is selected in ESS product dropdown")
+    public void verifyRegistrationField() throws InterruptedException {
+        // Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
+        systemInfo.essProduct();
+        Thread.sleep(3000);
+        systemInfo.clickPVInverter();
+        Thread.sleep(3000);
+        systemInfo.selectBrandUndePVInverter();
+        Thread.sleep(3000);
+        systemInfo.clickBattery();
+        Thread.sleep(3000);
+        systemInfo.clickNextBtn();
+    }
 
 }

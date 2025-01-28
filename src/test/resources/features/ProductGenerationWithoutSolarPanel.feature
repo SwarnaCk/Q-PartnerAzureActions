@@ -1,4 +1,4 @@
-Feature: Project Registration without battery
+Feature: Project Registration without Solar Panel
 
   Scenario: Successful product registration without battery
     Given I am on the login page
@@ -9,7 +9,7 @@ Feature: Project Registration without battery
     When I click on project Registration Tab
     And I am on the system information page
     And I enter Site Id as 'Yes' option is seelected in product dropdown
-    And I fill model, powerclass, type ,product generation as 'Yes' option is selected in solar panel dropdown
+    And I am not able to see model, powerclass, type ,product generation field as 'No' option is selected in solar panel dropdown
     And I fill registration no as'Yes' option is selected in ESS product dropdown
     And I cannot verify the battery status
     And I fill the project information details
@@ -19,4 +19,4 @@ Feature: Project Registration without battery
     And I click the submit button
     Then I verify details of Project in project details section
     When I click on the download PDF button
-    Then the PDF should contain the project name
+    Then the PDF should contain the home warranty certificate name
