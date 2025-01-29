@@ -19,3 +19,4 @@ Feature: Project Registration without ESS product and without Battery
     Then I verify details of Project in project details section
     When I click on the download PDF button
     Then the PDF should contain Panel Text
+  

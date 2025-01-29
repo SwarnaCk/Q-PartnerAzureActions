@@ -2,6 +2,9 @@ package com.utils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.io.FileReader;
 import java.util.Properties;
 
@@ -13,18 +16,19 @@ public class ConfigReader {
         try {
             properties = new Properties();
             properties.load(new FileReader("src/test/resources/config.properties"));
-            
+
             jsonParser = new JSONParser();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     private ConfigReader() {
         throw new IllegalStateException("Utility class");
     }
 
     public static String getProperty(String key) {
-        return properties.getProperty(key);
+        return properties.getProperty(key) != null ? properties.getProperty(key) : loadEnv(key);
     }
 
     public static JSONObject readJsonFile(String fileName) {
@@ -35,5 +39,10 @@ public class ConfigReader {
             e.printStackTrace();
             return new JSONObject();
         }
+    }
+
+    public static String loadEnv(String variable) {
+        Dotenv dotenv = Dotenv.load();
+        return dotenv.get(variable);
     }
 }

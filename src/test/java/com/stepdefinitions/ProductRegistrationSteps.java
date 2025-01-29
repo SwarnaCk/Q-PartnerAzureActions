@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import com.utils.ConfigReader;
 import com.utils.ReusableClass;
 import com.pages.LoginPage;
+import com.aiointegration.ResultUploaderToAIOTest;
 import com.pages.HomePage;
 import com.pages.SystemInfo;
 import com.pages.ProjectInfo;
@@ -41,13 +42,15 @@ public class ProductRegistrationSteps {
 
     @When("I enter username")
     public void iEnterUsername() {
-        String username = ConfigReader.getProperty("username");
+        ResultUploaderToAIOTest resultUploaderToAioTest = new ResultUploaderToAIOTest();
+        String username = resultUploaderToAioTest.getGitHubActionVariable("USERNAME");
         loginPage.enterUsername(username);
     }
 
     @When("I enter password")
     public void iEnterPassword() {
-        String password = ConfigReader.getProperty("password");
+        ResultUploaderToAIOTest resultUploaderToAioTest = new ResultUploaderToAIOTest();
+        String password = resultUploaderToAioTest.getGitHubActionVariable("PASSWORD");
         loginPage.enterPassword(password);
     }
 

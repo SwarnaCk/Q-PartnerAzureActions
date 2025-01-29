@@ -1,8 +1,8 @@
 package com.base;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+// import org.apache.commons.io.FileUtils;
+// import org.openqa.selenium.OutputType;
+// import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,8 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.utils.RandomDataGenerator;
 
-import java.io.File;
-import java.io.IOException;
+// import java.io.File;
+// import java.io.IOException;
 // import java.nio.file.Files;
 import java.time.Duration;
 import java.util.HashMap;
@@ -40,25 +40,18 @@ public class BaseClass {
         chromePrefs.put("plugins.always_open_pdf_externally", true);
 
         options.setExperimentalOption("prefs", chromePrefs);
+        options.addArguments("--headless"); // Headless
+        options.addArguments("--disable-notifications"); // Disable browser pop-ups
+        options.addArguments("--no-sandbox"); // Bypass OS-level security restrictions
+        options.addArguments("--disable-extensions"); // Disable Chrome extensions
+        options.addArguments("--disable-blink-features=AutomationControlled"); // Avoid detection as bot
+        options.addArguments("--disable-dev-shm-usage"); // Reduce memory usage in Docker/Linux environments
+        options.addArguments("--remote-allow-origins=*"); // Allow cross-origin requests (if needed)
 
-        options.addArguments("--disable-notifications");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         waitForLessTime = new WebDriverWait(driver, Duration.ofSeconds(2));
-
-        com.utils.FileUtils.clearDownloadDirectory(downloadDir);
-    }
-
-    public static String captureScreenshot(String testName) throws IOException {
-        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String destinationPath = "target/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png";
-        File destination = new File(destinationPath);
-        FileUtils.copyFile(screenshot, destination);
-        String path = destination.toPath().toAbsolutePath().normalize().toString()
-                .replace(System.getProperty("user.dir"), "");
-        System.out.println(path);
-        return path;
     }
 
     public void tearDown() {
