@@ -42,6 +42,8 @@ public class SystemInfo {
     private By powerClassDropdown = By.xpath("//select[@name=\"PanelPowerClass\"]");
     public By batteryCheckboxYes = By.xpath("//input[@part='checkbox']");
     public By batteryDropDown = By.xpath("//select[@name='BatteryBrand']");
+    private By batteryDropdownYes = By.xpath("//span[@class='slds-checkbox_faux']");
+    private By batteryBrand = By.xpath("//select[@name='BatteryBrand']");
     // private By powerClassSelection = By.xpath("//select[@name=\"PanelPowerClass\"]/option[@value=\"235\"]");
 
     private String path = "systemInfo.json";
@@ -148,6 +150,15 @@ public class SystemInfo {
     public boolean isRackingVisible(){
         return reusable.isElementLocated(rackingField);
         
+    }
+
+    public void clickBatteryYesOption() {
+        reusable.click(batteryDropdownYes);
+    }
+    public void batteryBrandSelectDropdown() {
+        WebElement dropdown = reusable.findElement(batteryBrand);
+        Select select = new Select(dropdown);
+        select.selectByIndex(2);
     }
     public boolean isRegistrationNoVisible(){
         return reusable.isElementLocated(regNumberField);
