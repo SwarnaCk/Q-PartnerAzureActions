@@ -184,6 +184,17 @@ public class ProductRegistrationSteps {
         Assertions.assertTrue(containsProjectName);
     }
 
+    @Then("the Certificate should contain the 'Battery' text")
+    public void validateBatteryText() throws Exception {
+        boolean containsProjectName = projectListTab.validateBatteryText("Battery");
+        Assertions.assertTrue(containsProjectName);
+    }
+    @Then ("the PDF should contain Panel Text")
+    public void validatePanelText() throws Exception {
+        boolean containsProjectName = projectListTab.validatePanelText("Panel");
+        Assertions.assertTrue(containsProjectName);
+    }
+
     @Then("I close the PDF tab and switch back")
     public void closePdfTabAndSwitchBack() {
         projectListTab.closePdfTabAndSwitchBack();

@@ -8,6 +8,10 @@ name: Run Cucumber Tests
         options:
         - Successful product registration with site id
         - Successful project registration without site id
+        - Successful product registration without Solar Panel without battery without
+          ESS products
+        - Successful product registration without ESS product without battery
+        - Successful product registration without battery
         - All
         required: true
 jobs:

@@ -1,5 +1,5 @@
 Feature: Project Registration without site id
-  @SCRUM-TC-220
+  @SCRUM-TC-226
   Scenario: Successful project registration without site id
     Given I am on the login page
     When I enter username
@@ -15,5 +15,3 @@ Feature: Project Registration without site id
     Then I verify project Registration Details in Project Details Tab
     And I click the submit button
     Then I verify details of Project in project details section
-  
-    

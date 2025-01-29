@@ -17,7 +17,7 @@ import com.aiointegration.ResultUploaderToAIOTest;
                 "pretty",
                 "html:target/cucumber-reports.html",
                 "json:target/cucumber-reports.json"
-        }, tags = "@SCRUM-TC-220", publish = true)
+        }, publish = true)
 public class TestRunner {
     @AfterClass
     public static void uploadTestResultsAndScreenshots() throws IOException {
