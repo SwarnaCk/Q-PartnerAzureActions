@@ -6,7 +6,10 @@ name: Run Cucumber Tests
         type: choice
         description: Select a scenario to run
         options:
+        - Successful project registration without site id
         - Successful product registration with site id
+        - Successful product registration without Solar panel, ESS product, Warranty
+          certificate generation
         - Successful project registration without site id
         - Successful product registration without Solar Panel without battery without
           ESS products

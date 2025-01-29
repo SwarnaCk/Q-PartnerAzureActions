@@ -330,4 +330,24 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isProductGenerationVisible());
         Assertions.assertFalse(systemInfo.isModelsVisible());
     }
+
+    @And ("I select 'Yes' in the battery status")
+    public void selectYesFromBatteryStatus() throws InterruptedException {
+    reusable.waitForPageLoad();
+    Thread.sleep(2000);
+    systemInfo.clickBattery();
+    systemInfo.clickBatteryCheckboxYes();
+    systemInfo.selectBattery((String) jsonObject.get("battery"));
+    systemInfo.clickNextBtn();
+    Thread.sleep(2000);
+    }
+    @Then("I verify system information details in Project Details Tab")
+    public void iVerifyProjectRegistrationSystemInformationDetailsInProjectDetailsTab() {
+        JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
+        Assert.assertEquals((String) systemInfoJson.get("siteId"), systemInfo.getSiteId());
+        Assert.assertEquals((String) systemInfoJson.get("brand"), systemInfo.getBrand());
+        reusable.waitForPageLoad();
+        Assert.assertEquals((String) systemInfoJson.get("powerClass"), systemInfo.getPowerClass());
+        Assert.assertEquals((String) systemInfoJson.get("battery"), systemInfo.getBattery());
+    }
 }
