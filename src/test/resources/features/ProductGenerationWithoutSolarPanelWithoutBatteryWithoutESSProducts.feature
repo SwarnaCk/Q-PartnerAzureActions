@@ -1,5 +1,5 @@
 Feature: Project Registration without Solar Panel without battery without ESS products
-
+  @SCRUM-TC-221
   Scenario: Successful product registration without Solar Panel without battery without ESS products
     Given I am on the login page
     When I enter username

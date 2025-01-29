@@ -1,5 +1,5 @@
 Feature: Project Registration without ESS product and without Battery
-
+  @SCRUM-TC-223
   Scenario: Successful product registration without ESS product without battery
     Given I am on the login page
     When I enter username
@@ -18,4 +18,5 @@ Feature: Project Registration without ESS product and without Battery
     And I click the submit button
     Then I verify details of Project in project details section
     When I click on the download PDF button
-    Then the PDF should contain the project name
+    Then the PDF should contain Panel Text
+  
