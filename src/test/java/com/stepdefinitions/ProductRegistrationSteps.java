@@ -37,7 +37,9 @@ public class ProductRegistrationSteps {
 
     public ProductRegistrationSteps() {
         String aioToken = System.getenv("AIO_TOKEN");
-        String gitToken = System.getenv("GITHUB_TOKEN");
+        String gitToken = System.getenv("GIT_TOKEN");
+        System.out.println("AIO_TOKEN: " + aioToken);
+        System.out.println("GIT_TOKEN: " + gitToken);
         this.resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
     }
 
@@ -189,7 +191,8 @@ public class ProductRegistrationSteps {
         boolean containsProjectName = projectListTab.validateBatteryText("Battery");
         Assertions.assertTrue(containsProjectName);
     }
-    @Then ("the PDF should contain Panel Text")
+
+    @Then("the PDF should contain Panel Text")
     public void validatePanelText() throws Exception {
         boolean containsProjectName = projectListTab.validatePanelText("Panel");
         Assertions.assertTrue(containsProjectName);

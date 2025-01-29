@@ -25,7 +25,7 @@ public class TestRunner {
         if (cucumberJsonFile.exists()) {
             System.out.println("Uploading Cucumber JSON test results...");
             String aioToken = System.getenv("AIO_TOKEN");
-            String gitToken = System.getenv("GITHUB_TOKEN");
+            String gitToken = System.getenv("GIT_TOKEN");
             ResultUploaderToAIOTest resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
             resultUploader.uploadTestResults(cucumberJsonFile);
         } else {
