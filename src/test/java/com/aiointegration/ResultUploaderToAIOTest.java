@@ -1,30 +1,31 @@
 package com.aiointegration;
 
 import java.io.File;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import java.io.FileInputStream;
-// import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.utils.ConfigReader;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 public class ResultUploaderToAIOTest {
 
     private static final String API_URL = "https://tcms.aiojiraapps.com/aio-tcms/api/v1/project/{projectKey}/testcycle/{testCycleKey}/import/results?type=Cucumber";
     private static final String PROJECT_KEY = "SCRUM";
     private static final String TEST_CYCLE_KEY = "SCRUM-CY-30";
-    private static final String AIO_TOKEN = ConfigReader.loadEnv("AIO_TOKEN") != null
-            ? ConfigReader.loadEnv("AIO_TOKEN")
-            : System.getenv("AIO_TOKEN");
-    private static final String GIT_TOKEN = ConfigReader.loadEnv("GIT_TOKEN") != null
-            ? ConfigReader.loadEnv("GIT_TOKEN")
-            : System.getenv("GIT_TOKEN");
     private static final String GITHUB_REPO = "saikat-ck/QPartner-POC";
+
+    private final String aioToken;
+    private final String gitToken;
+
+    public ResultUploaderToAIOTest(String aioToken, String gitToken) {
+        this.aioToken = aioToken;
+        this.gitToken = gitToken;
+    }
 
     public String getGitHubActionVariable(String variableName) {
         String apiUrl = "https://api.github.com/repos/" + GITHUB_REPO + "/actions/variables";
@@ -32,7 +33,7 @@ public class ResultUploaderToAIOTest {
         try {
             Response response = RestAssured
                     .given()
-                    .header("Authorization", "Bearer " + GIT_TOKEN)
+                    .header("Authorization", "Bearer " + this.gitToken)
                     .when()
                     .get(apiUrl)
                     .then()
@@ -73,7 +74,7 @@ public class ResultUploaderToAIOTest {
         try (FileInputStream fis = new FileInputStream(cucumberJsonFile)) {
             Response response = RestAssured
                     .given()
-                    .header("Authorization", "AioAuth " + AIO_TOKEN)
+                    .header("Authorization", "AioAuth " + this.aioToken)
                     .multiPart("file", cucumberJsonFile, "application/json")
                     .formParam("createNewRun", "true")
                     .formParam("bddForceUpdateCase", "true")

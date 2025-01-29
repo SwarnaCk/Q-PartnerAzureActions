@@ -1,6 +1,5 @@
 package com.runner;
 
-// import io.cucumber.java.AfterAll;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
@@ -18,17 +17,17 @@ import com.aiointegration.ResultUploaderToAIOTest;
                 "pretty",
                 "html:target/cucumber-reports.html",
                 "json:target/cucumber-reports.json"
-        } 
-        //tags = "@SCRUM-TC-223"
-        )
+        }, publish = true)
 public class TestRunner {
     @AfterClass
     public static void uploadTestResultsAndScreenshots() throws IOException {
         File cucumberJsonFile = new File("target/cucumber-reports.json");
         if (cucumberJsonFile.exists()) {
             System.out.println("Uploading Cucumber JSON test results...");
-            ResultUploaderToAIOTest uploader = new ResultUploaderToAIOTest();
-            uploader.uploadTestResults(cucumberJsonFile);
+            String aioToken = System.getenv("AIO_TOKEN");
+            String gitToken = System.getenv("GITHUB_TOKEN");
+            ResultUploaderToAIOTest resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
+            resultUploader.uploadTestResults(cucumberJsonFile);
         } else {
             System.err.println("Cucumber JSON file not found: " + cucumberJsonFile.getAbsolutePath());
             return;
