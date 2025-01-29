@@ -12,13 +12,14 @@ import org.junit.runner.RunWith;
 import com.aiointegration.ResultUploaderToAIOTest;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/features/ProductRegistrationWithoutESSProductWithoutBattery.feature",
+@CucumberOptions(features = "src/test/resources/features",
                  glue = {"com.stepdefinitions","com.hooks"},
                  plugin = {
                         "pretty", 
                         "html:target/cucumber-reports.html",
                         "json:target/cucumber-reports.json"
-                }
+                },
+                tags = "@SCRUM-TC-224"
                 
                 )               
 public class TestRunner {

@@ -68,6 +68,25 @@ public class ProjectListTab {
             return false; // Or return a default value
         }
     }
+    public boolean validateCompleteSystemTextContent(String expectedText) throws IOException {
+
+        try {
+
+            // Extract the text from the PDF file using Apache PDFBox
+            String path=System.getProperty("user.dir") + "/src/test/resources/pdfData/QPartner_Certificate_Complete_System.pdf";
+            File pdfFilePath = new File(path);
+            BufferedInputStream bf = new BufferedInputStream(new FileInputStream(pdfFilePath));
+            PDDocument document = PDDocument.load(bf);
+            PDFTextStripper stripper = new PDFTextStripper();
+            String pdfText = stripper.getText(document);
+            // Check if the expected text is present in the extracted tex
+            return pdfText.contains(expectedText);
+        } catch (IOException e) {
+            // Handle the exception, for example by logging the error
+            e.printStackTrace();
+            return false; // Or return a default value
+        }
+    }
 
     public void closePdfTabAndSwitchBack() {
         reusable.getDriver().close(); // Close the current tab (PDF tab)

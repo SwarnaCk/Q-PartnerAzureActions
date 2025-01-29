@@ -1,17 +1,17 @@
 name: Run Cucumber Tests
 jobs:
     run-tests:
-        runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v3
-            name: Checkout code
-          - with:
-                distribution: temurin
-                java-version: '17'
-            name: Set up JDK
+          - name: Checkout code
+            uses: actions/checkout@v3
+          - name: Set up JDK
             uses: actions/setup-java@v3
-          - run: mvn clean test -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
-            name: Run Selected Scenario
+            with:
+                java-version: '17'
+                distribution: temurin
+          - name: Run Selected Scenario
+            run: mvn clean test -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
+        runs-on: ubuntu-latest
 'on':
     workflow_dispatch:
         inputs:
@@ -21,6 +21,6 @@ jobs:
                 options:
                   - Successful product registration with site id
                   - Successful product registration without Solar panel, ESS product, Warranty certificate
-                    generation, and Warranty certificate email send
+                    generation
                   - Successful project registration without site id
                 required: true
