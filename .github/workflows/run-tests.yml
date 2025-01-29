@@ -1,24 +1,27 @@
-jobs:
-    run-tests:
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v3
-          - uses: actions/setup-java@v3
-            with:
-                distribution: temurin
-                java-version: '17'
-            name: Set up JDK
-          - name: Run Selected Scenario
-            run: mvn clean test -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
-        runs-on: ubuntu-latest
 'on':
     workflow_dispatch:
         inputs:
             scenario:
+                type: choice
+                required: true
                 options:
                   - Successful product registration with site id
                   - Successful project registration without site id
-                required: true
-                type: choice
+                  - Successful product registration without Solar Panel without battery without ESS products
+                  - Successful product registration without ESS product without battery
+                  - Successful product registration without battery
                 description: Select a scenario to run
+jobs:
+    run-tests:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+            name: Checkout code
+          - with:
+                java-version: '17'
+                distribution: temurin
+            uses: actions/setup-java@v3
+            name: Set up JDK
+          - run: mvn clean test -Dcucumber.filter.name="${{ github.event.inputs.scenario }}"
+            name: Run Selected Scenario
 name: Run Cucumber Tests

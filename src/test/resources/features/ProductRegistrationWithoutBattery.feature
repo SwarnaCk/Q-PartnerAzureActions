@@ -1,5 +1,5 @@
 Feature: Project Registration without battery
-
+  @SCRUM-TC-222
   Scenario: Successful product registration without battery
     Given I am on the login page
     When I enter username
@@ -19,4 +19,5 @@ Feature: Project Registration without battery
     And I click the submit button
     Then I verify details of Project in project details section
     When I click on the download PDF button
-    Then the PDF should contain the project name
+    Then the PDF should contain the 'Complete System' text
+   
