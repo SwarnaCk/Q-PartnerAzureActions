@@ -76,13 +76,17 @@ public class ResultUploaderToAIOTest {
                     .header("Authorization", "AioAuth " + AIO_TOKEN)
                     .multiPart("file", cucumberJsonFile, "application/json")
                     .formParam("createNewRun", "true")
+                    .formParam("createCase", "true")
+                    .formParam("addCaseToCycle", "true")
                     .formParam("bddForceUpdateCase", "true")
+                    .formParam("forceUpdateCase", "true")
                     .formParam("updateDatasets", "true")
                     .formParam("type", "Cucumber")
                     .when()
                     .post(apiUrl)
                     .then()
                     .extract().response();
+ 
 
             int statusCode = response.getStatusCode();
             String responseBody = response.getBody().asString();

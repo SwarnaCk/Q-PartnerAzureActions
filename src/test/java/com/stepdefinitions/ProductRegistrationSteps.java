@@ -321,4 +321,10 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isProductGenerationVisible());
         Assertions.assertFalse(systemInfo.isModelsVisible());
     }
+    @And("I am not able to enter Site ID as I select 'No' option in product dropdown in system information page")
+    public void verifySiteIdField() throws InterruptedException {
+        systemInfo.selectProductWithNoOption();
+        reusable.waitForPageLoad();
+        Assertions.assertFalse(systemInfo.isSiteIDVisible());
+    }
 }

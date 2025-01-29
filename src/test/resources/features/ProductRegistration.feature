@@ -17,4 +17,5 @@ Feature: Project Registration with site id
     When I click on the download PDF button 
     # Then the PDF should contain the project name
     Then the PDF should contain the 'Complete System' text
+    And I fill the project information details
     

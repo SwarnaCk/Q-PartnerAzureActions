@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.utils.FileUtils;
 import com.utils.RandomDataGenerator;
 
 // import java.io.File;
@@ -52,6 +53,8 @@ public class BaseClass {
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         waitForLessTime = new WebDriverWait(driver, Duration.ofSeconds(2));
+
+        FileUtils.clearDownloadDirectory(downloadDir);
     }
 
     public void tearDown() {

@@ -18,17 +18,17 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      name: Checkout code
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        distribution: temurin
         java-version: '17'
+        distribution: temurin
     - name: Run Specific Test Case
       env:
-        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
+        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
       if: ${{ github.event.inputs.scenario != 'All' }}
       run: |-
         echo "Running scenario by name: ${{ github.event.inputs.scenario }}"
