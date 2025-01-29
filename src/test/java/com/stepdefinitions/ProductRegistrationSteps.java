@@ -33,6 +33,13 @@ public class ProductRegistrationSteps {
     private SystemInfo systemInfo = new SystemInfo(reusable);
     private ProjectOwnerInfo projectOwnerInfo = new ProjectOwnerInfo(reusable);
     private ProjectListTab projectListTab = new ProjectListTab(reusable);
+    private final ResultUploaderToAIOTest resultUploader;
+
+    public ProductRegistrationSteps() {
+        String aioToken = System.getenv("AIO_TOKEN");
+        String gitToken = System.getenv("GITHUB_TOKEN");
+        this.resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
+    }
 
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
@@ -42,15 +49,13 @@ public class ProductRegistrationSteps {
 
     @When("I enter username")
     public void iEnterUsername() {
-        ResultUploaderToAIOTest resultUploaderToAioTest = new ResultUploaderToAIOTest();
-        String username = resultUploaderToAioTest.getGitHubActionVariable("USERNAME");
+        String username = resultUploader.getGitHubActionVariable("USERNAME");
         loginPage.enterUsername(username);
     }
 
     @When("I enter password")
     public void iEnterPassword() {
-        ResultUploaderToAIOTest resultUploaderToAioTest = new ResultUploaderToAIOTest();
-        String password = resultUploaderToAioTest.getGitHubActionVariable("PASSWORD");
+        String password = resultUploader.getGitHubActionVariable("PASSWORD");
         loginPage.enterPassword(password);
     }
 
@@ -290,15 +295,16 @@ public class ProductRegistrationSteps {
         Thread.sleep(3000);
         systemInfo.selectBrandUndePVInverter();
     }
-    @And ("I select 'No' in the battery status")
+
+    @And("I select 'No' in the battery status")
     public void selectNoFromBatteryStatus() throws InterruptedException {
-    reusable.waitForPageLoad();
-    Thread.sleep(2000);
-    systemInfo.clickBattery();
-    systemInfo.clickNextBtn();
-    Thread.sleep(2000);
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.clickBattery();
+        systemInfo.clickNextBtn();
+        Thread.sleep(2000);
     }
-    
+
     @And("I am not able to see model, type, powerclass, product generation field as 'No' option is selected in solar panel dropdown")
     public void verifyTypeModelPowerClassField() throws InterruptedException {
         systemInfo.selectModule();
