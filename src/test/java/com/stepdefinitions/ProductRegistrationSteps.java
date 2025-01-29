@@ -230,6 +230,41 @@ public class ProductRegistrationSteps {
 
     }
 
+    @And("I select 'No' in the product availability dropdown")
+    public void iSelectNoInTheProductAvailabilityDropdown() {
+        systemInfo.selectProductWithNoOption();
+        Assertions.assertFalse(systemInfo.isSiteIDVisible());
+    }
+
+    @And("I select 'No' in the solar panel dropdown")
+    public void iSelectNoInTheSolarPanelDropdown() throws InterruptedException {
+        systemInfo.selectModule();
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.selectBrand((String) jsonObject.get("brand"));
+        systemInfo.selectPowerclassDropdown((String) jsonObject.get("powerClass"));
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
+        Assertions.assertFalse(systemInfo.isTypeVisible());
+    }
+
+    @And("I select 'No' for ESS product and enable the battery option")
+    public void verifyESSProductDropdown() throws InterruptedException {
+        // Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
+        systemInfo.essProduct();
+        Thread.sleep(1000);
+        systemInfo.clickPVInverter();
+        Thread.sleep(1000);
+        systemInfo.selectBrandUndePVInverter();
+        Thread.sleep(1000);
+        systemInfo.clickBattery();
+        Thread.sleep(1000);
+        systemInfo.clickBatteryYesOption();
+        Thread.sleep(1000);
+        systemInfo.batteryBrandSelectDropdown();
+        Thread.sleep(1000);
+        systemInfo.clickNextBtn();
+    }
+
     @And("I am on the system information page")
     public void systemInformationTextVisible() {
         Assertions.assertTrue(systemInfo.isSystemInformationTextVisible());
