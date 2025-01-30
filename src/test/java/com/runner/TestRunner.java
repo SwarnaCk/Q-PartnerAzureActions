@@ -18,7 +18,9 @@ import com.utils.ConfigReader;
                 "pretty",
                 "html:target/cucumber-reports.html",
                 "json:target/cucumber-reports.json"
-        }, publish = true)
+        }, publish = true,
+        tags = "@SCRUM-TC-224"
+        )
 public class TestRunner {
     @AfterClass
     public static void uploadTestResultsAndScreenshots() throws IOException {
