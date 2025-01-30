@@ -36,10 +36,10 @@ public class ProductRegistrationSteps {
     private final ResultUploaderToAIOTest resultUploader;
 
     public ProductRegistrationSteps() {
-        String aioToken = System.getenv("AIO_TOKEN");
-        String gitToken = System.getenv("GIT_TOKEN");
-        System.out.println("AIO_TOKEN: " + aioToken);
-        System.out.println("GIT_TOKEN: " + gitToken);
+        String aioToken = System.getenv("AIO_TOKEN") != null ? System.getenv("AIO_TOKEN")
+                : ConfigReader.loadEnv("AIO_TOKEN");
+        String gitToken = System.getenv("GIT_TOKEN") != null ? System.getenv("GIT_TOKEN")
+                : ConfigReader.loadEnv("GIT_TOKEN");
         this.resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
     }
 
@@ -367,16 +367,17 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isModelsVisible());
     }
 
-    @And ("I select 'Yes' in the battery status")
+    @And("I select 'Yes' in the battery status")
     public void selectYesFromBatteryStatus() throws InterruptedException {
-    reusable.waitForPageLoad();
-    Thread.sleep(2000);
-    systemInfo.clickBattery();
-    systemInfo.clickBatteryCheckboxYes();
-    systemInfo.selectBattery((String) jsonObject.get("battery"));
-    systemInfo.clickNextBtn();
-    Thread.sleep(2000);
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.clickBattery();
+        systemInfo.clickBatteryCheckboxYes();
+        systemInfo.selectBattery((String) jsonObject.get("battery"));
+        systemInfo.clickNextBtn();
+        Thread.sleep(2000);
     }
+
     @Then("I verify system information details in Project Details Tab")
     public void iVerifyProjectRegistrationSystemInformationDetailsInProjectDetailsTab() {
         JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
