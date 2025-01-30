@@ -1,5 +1,5 @@
 name: Run Cucumber Tests
-'on':
+on:
   workflow_dispatch:
   schedule:
     - cron: "10 2 * * *"
