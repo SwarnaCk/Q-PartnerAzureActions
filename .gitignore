@@ -3,3 +3,4 @@ target/
 src/test/resources/config.properties
 scenarios.json
 .env
+src/test/resources/pdfData/

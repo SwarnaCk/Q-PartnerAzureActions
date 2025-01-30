@@ -3,6 +3,7 @@ package com.pages;
 // import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 // import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -39,13 +40,19 @@ public class SystemInfo {
     private By nextButton = By.xpath("//button[@title=\"NavigatetoSystemInformation\"]");
     private By model = By.xpath("//select[@name=\"PanelModel\"]");
     private By powerClassDropdown = By.xpath("//select[@name=\"PanelPowerClass\"]");
+    public By batteryCheckboxYes = By.xpath("//input[@part='checkbox']");
+    public By batteryDropDown = By.xpath("//select[@name='BatteryBrand']");
+    private By batteryDropdownYes = By.xpath("//span[@class='slds-checkbox_faux']");
+    private By batteryBrand = By.xpath("//select[@name='BatteryBrand']");
     // private By powerClassSelection = By.xpath("//select[@name=\"PanelPowerClass\"]/option[@value=\"235\"]");
+
+    private String path = "systemInfo.json";
+
     public SystemInfo(ReusableClass reusable) {
         this.reusable = reusable;
     }
     
     public String getBrand() {
-        String path="systemInfo.json";
         return reusable.getText(reusable.getAttr(path,"brand"));
     }
 
@@ -144,6 +151,15 @@ public class SystemInfo {
         return reusable.isElementLocated(rackingField);
         
     }
+
+    public void clickBatteryYesOption() {
+        reusable.click(batteryDropdownYes);
+    }
+    public void batteryBrandSelectDropdown() {
+        WebElement dropdown = reusable.findElement(batteryBrand);
+        Select select = new Select(dropdown);
+        select.selectByIndex(2);
+    }
     public boolean isRegistrationNoVisible(){
         return reusable.isElementLocated(regNumberField);
     }
@@ -161,5 +177,26 @@ public class SystemInfo {
     }
     public  boolean isBatteryStatusVisible(){
         return reusable.isElementLocated(batteryDropdown);
+    }
+    public void selectBattery(String options) {
+        WebElement dropdown = reusable.findElement(batteryDropDown);
+        Select select = new Select(dropdown);
+        select.selectByVisibleText(options);
+    }
+    public void clickBatteryCheckboxYes(){
+        JavascriptExecutor js = (JavascriptExecutor) reusable.getDriver();
+        js.executeScript("arguments[0].click();", reusable.findElement(batteryCheckboxYes));
+    }
+    public String getSiteId() {
+        return reusable.getText(reusable.getAttr(path, "siteId"));
+    }
+    public String getPowerClass() {
+        return reusable.getText(reusable.getAttr(path, "powerClass"));
+    }
+    public String getRegistrationNumber() {
+        return reusable.getText(reusable.getAttr(path, "registrationNumber"));
+    }
+    public String getBattery() {
+        return reusable.getText(reusable.getAttr(path, "battery"));
     }
 }

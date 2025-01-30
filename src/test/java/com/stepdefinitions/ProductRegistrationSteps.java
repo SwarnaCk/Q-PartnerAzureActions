@@ -33,6 +33,15 @@ public class ProductRegistrationSteps {
     private SystemInfo systemInfo = new SystemInfo(reusable);
     private ProjectOwnerInfo projectOwnerInfo = new ProjectOwnerInfo(reusable);
     private ProjectListTab projectListTab = new ProjectListTab(reusable);
+    private final ResultUploaderToAIOTest resultUploader;
+
+    public ProductRegistrationSteps() {
+        String aioToken = System.getenv("AIO_TOKEN");
+        String gitToken = System.getenv("GIT_TOKEN");
+        System.out.println("AIO_TOKEN: " + aioToken);
+        System.out.println("GIT_TOKEN: " + gitToken);
+        this.resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
+    }
 
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
@@ -42,15 +51,13 @@ public class ProductRegistrationSteps {
 
     @When("I enter username")
     public void iEnterUsername() {
-        ResultUploaderToAIOTest resultUploaderToAioTest = new ResultUploaderToAIOTest();
-        String username = resultUploaderToAioTest.getGitHubActionVariable("USERNAME");
+        String username = resultUploader.getGitHubActionVariable("USERNAME");
         loginPage.enterUsername(username);
     }
 
     @When("I enter password")
     public void iEnterPassword() {
-        ResultUploaderToAIOTest resultUploaderToAioTest = new ResultUploaderToAIOTest();
-        String password = resultUploaderToAioTest.getGitHubActionVariable("PASSWORD");
+        String password = resultUploader.getGitHubActionVariable("PASSWORD");
         loginPage.enterPassword(password);
     }
 
@@ -184,7 +191,8 @@ public class ProductRegistrationSteps {
         boolean containsProjectName = projectListTab.validateBatteryText("Battery");
         Assertions.assertTrue(containsProjectName);
     }
-    @Then ("the PDF should contain Panel Text")
+
+    @Then("the PDF should contain Panel Text")
     public void validatePanelText() throws Exception {
         boolean containsProjectName = projectListTab.validatePanelText("Panel");
         Assertions.assertTrue(containsProjectName);
@@ -220,6 +228,41 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isRackingVisible());
         systemInfo.clickNextBtn();
 
+    }
+
+    @And("I select 'No' in the product availability dropdown")
+    public void iSelectNoInTheProductAvailabilityDropdown() {
+        systemInfo.selectProductWithNoOption();
+        Assertions.assertFalse(systemInfo.isSiteIDVisible());
+    }
+
+    @And("I select 'No' in the solar panel dropdown")
+    public void iSelectNoInTheSolarPanelDropdown() throws InterruptedException {
+        systemInfo.selectModule();
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.selectBrand((String) jsonObject.get("brand"));
+        systemInfo.selectPowerclassDropdown((String) jsonObject.get("powerClass"));
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
+        Assertions.assertFalse(systemInfo.isTypeVisible());
+    }
+
+    @And("I select 'No' for ESS product and enable the battery option")
+    public void verifyESSProductDropdown() throws InterruptedException {
+        // Assertions.assertFalse(systemInfo.isBatteryStatusVisible());
+        systemInfo.essProduct();
+        Thread.sleep(1000);
+        systemInfo.clickPVInverter();
+        Thread.sleep(1000);
+        systemInfo.selectBrandUndePVInverter();
+        Thread.sleep(1000);
+        systemInfo.clickBattery();
+        Thread.sleep(1000);
+        systemInfo.clickBatteryYesOption();
+        Thread.sleep(1000);
+        systemInfo.batteryBrandSelectDropdown();
+        Thread.sleep(1000);
+        systemInfo.clickNextBtn();
     }
 
     @And("I am on the system information page")
@@ -302,15 +345,16 @@ public class ProductRegistrationSteps {
         Thread.sleep(3000);
         systemInfo.selectBrandUndePVInverter();
     }
-    @And ("I select 'No' in the battery status")
+
+    @And("I select 'No' in the battery status")
     public void selectNoFromBatteryStatus() throws InterruptedException {
-    reusable.waitForPageLoad();
-    Thread.sleep(2000);
-    systemInfo.clickBattery();
-    systemInfo.clickNextBtn();
-    Thread.sleep(2000);
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.clickBattery();
+        systemInfo.clickNextBtn();
+        Thread.sleep(2000);
     }
-    
+
     @And("I am not able to see model, type, powerclass, product generation field as 'No' option is selected in solar panel dropdown")
     public void verifyTypeModelPowerClassField() throws InterruptedException {
         systemInfo.selectModule();
@@ -322,10 +366,24 @@ public class ProductRegistrationSteps {
         Assertions.assertFalse(systemInfo.isProductGenerationVisible());
         Assertions.assertFalse(systemInfo.isModelsVisible());
     }
-    @And("I am not able to enter Site ID as I select 'No' option in product dropdown in system information page")
-    public void verifySiteIdField() throws InterruptedException {
-        systemInfo.selectProductWithNoOption();
+
+    @And ("I select 'Yes' in the battery status")
+    public void selectYesFromBatteryStatus() throws InterruptedException {
+    reusable.waitForPageLoad();
+    Thread.sleep(2000);
+    systemInfo.clickBattery();
+    systemInfo.clickBatteryCheckboxYes();
+    systemInfo.selectBattery((String) jsonObject.get("battery"));
+    systemInfo.clickNextBtn();
+    Thread.sleep(2000);
+    }
+    @Then("I verify system information details in Project Details Tab")
+    public void iVerifyProjectRegistrationSystemInformationDetailsInProjectDetailsTab() {
+        JSONObject systemInfoJson = ConfigReader.readJsonFile("systemInfo.json");
+        Assert.assertEquals((String) systemInfoJson.get("siteId"), systemInfo.getSiteId());
+        Assert.assertEquals((String) systemInfoJson.get("brand"), systemInfo.getBrand());
         reusable.waitForPageLoad();
-        Assertions.assertFalse(systemInfo.isSiteIDVisible());
+        Assert.assertEquals((String) systemInfoJson.get("powerClass"), systemInfo.getPowerClass());
+        Assert.assertEquals((String) systemInfoJson.get("battery"), systemInfo.getBattery());
     }
 }
