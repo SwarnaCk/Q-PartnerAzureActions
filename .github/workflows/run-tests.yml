@@ -1,6 +1,8 @@
 name: Run Cucumber Tests
 'on':
   workflow_dispatch:
+  schedule:
+    - cron: "10 2 * * *"
     inputs:
       scenario:
         type: choice
@@ -26,12 +28,12 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
         distribution: temurin
+        java-version: '17'
     - name: Run Specific Test Case
       env:
-        AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
         GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
       if: ${{ github.event.inputs.scenario != 'All' }}
       run: |-
         echo "Running scenario by name: ${{ github.event.inputs.scenario }}"
