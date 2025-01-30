@@ -15,6 +15,7 @@ name: Run Cucumber Tests
           ESS products
         - Successful product registration without ESS product without battery
         - Successful product registration without battery
+        - Successful product registration with only a battery
         - All
         required: true
 jobs:
@@ -26,12 +27,12 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
         distribution: temurin
+        java-version: '17'
     - name: Run Specific Test Case
       env:
-        AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
         GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
       if: ${{ github.event.inputs.scenario != 'All' }}
       run: |-
         echo "Running scenario by name: ${{ github.event.inputs.scenario }}"

@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 
 import java.io.FileReader;
 import java.util.Properties;
@@ -42,7 +43,12 @@ public class ConfigReader {
     }
 
     public static String loadEnv(String variable) {
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = null;
+        try {
+            dotenv = Dotenv.load();
+        } catch (DotenvException e) {
+            return null;
+        }
         return dotenv.get(variable);
     }
 }

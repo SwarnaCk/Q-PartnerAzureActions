@@ -10,6 +10,7 @@ import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 
 import com.aiointegration.ResultUploaderToAIOTest;
+import com.utils.ConfigReader;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features", glue = {
@@ -24,8 +25,12 @@ public class TestRunner {
         File cucumberJsonFile = new File("target/cucumber-reports.json");
         if (cucumberJsonFile.exists()) {
             System.out.println("Uploading Cucumber JSON test results...");
-            String aioToken = System.getenv("AIO_TOKEN");
-            String gitToken = System.getenv("GIT_TOKEN");
+            String aioToken = null;
+            String gitToken = null;
+            aioToken = System.getenv("AIO_TOKEN") != null ? System.getenv("AIO_TOKEN")
+                    : ConfigReader.loadEnv("AIO_TOKEN");
+            gitToken = System.getenv("GIT_TOKEN") != null ? System.getenv("GIT_TOKEN")
+                    : ConfigReader.loadEnv("GIT_TOKEN");
             ResultUploaderToAIOTest resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
             resultUploader.uploadTestResults(cucumberJsonFile);
         } else {
