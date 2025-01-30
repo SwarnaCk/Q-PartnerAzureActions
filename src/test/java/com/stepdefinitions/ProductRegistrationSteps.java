@@ -266,7 +266,8 @@ public class ProductRegistrationSteps {
     }
 
     @And("I am on the system information page")
-    public void systemInformationTextVisible() {
+    public void systemInformationTextVisible() throws InterruptedException{
+        Thread.sleep(1000);
         Assertions.assertTrue(systemInfo.isSystemInformationTextVisible());
     }
 
