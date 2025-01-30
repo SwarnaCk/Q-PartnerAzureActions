@@ -224,6 +224,7 @@ public class ProductRegistrationSteps {
 
     @And("I am on the system information page")
     public void systemInformationTextVisible() {
+        reusable.waitForPageLoad();
         Assertions.assertTrue(systemInfo.isSystemInformationTextVisible());
     }
 
