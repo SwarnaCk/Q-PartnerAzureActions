@@ -277,6 +277,32 @@ public class ProductRegistrationSteps {
         jsonObject.get("jsonObject");
         systemInfo.enterSiteId((String) jsonObject.get("siteId"));
     }
+    @And("I Select 'Yes' for ESS product and fills in racking details in System Info")
+    public void registerCSSProductsWithRacking() throws InterruptedException {
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.enterRegistrationNumber((String) jsonObject.get("registrationNumber"));
+        systemInfo.selectRackingBrand((String) jsonObject.get("rackingBrand"));
+    }
+    @And("I fill power class, type ,product generation as 'Yes' option is selected in solar panel dropdown")
+    public void enterAllDetailsOfSolarModule() throws Exception {
+        jsonObject = ConfigReader.readJsonFile("systemInfo.json");
+        jsonObject.get("jsonObject");
+        systemInfo.selectPowerclassDropdown((String) jsonObject.get("powerClass"));
+        Thread.sleep(2000);
+        systemInfo.selectTypeDropdown((String) jsonObject.get("type"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectProductGenerationDropdown((String) jsonObject.get("productGeneration"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectModelDropdown((String) jsonObject.get("model"));
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        reusable.waitForPageLoad();
+        Thread.sleep(2000);
+        systemInfo.selectNumberOfPanels((String) jsonObject.get("numberOfPanels"));
+    }
 
     @And("I fill model, powerclass, type ,product generation as 'Yes' option is selected in solar panel dropdown")
     public void enterAllDetailsUndersolarPanel() throws Exception {
