@@ -1,5 +1,5 @@
 Feature: Projduct Registration with ESS Products only
-  //@SCRUM-TC-225
+  
   Scenario: Successful product registration with only ESS Products
     Given I am on the login page
     When I enter username

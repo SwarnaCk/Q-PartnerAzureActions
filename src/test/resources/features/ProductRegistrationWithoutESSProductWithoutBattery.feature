@@ -1,5 +1,5 @@
 Feature: Project Registration without ESS product and without Battery
-  @SCRUM-TC-223
+  
   Scenario: Successful product registration without ESS product without battery
     Given I am on the login page
     When I enter username

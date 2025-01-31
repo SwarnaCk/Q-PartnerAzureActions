@@ -51,4 +51,5 @@ public class ConfigReader {
         }
         return dotenv.get(variable);
     }
+    
 }

@@ -18,8 +18,7 @@ import com.utils.ConfigReader;
                 "pretty",
                 "html:target/cucumber-reports.html",
                 "json:target/cucumber-reports.json"
-        }, publish = true,
-        tags = "@SCRUM-TC-224"
+        }, publish = true
         )
 public class TestRunner {
     @AfterClass

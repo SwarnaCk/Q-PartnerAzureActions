@@ -1,5 +1,5 @@
 Feature: Project Registration with site id
-  @SCRUM-TC-219
+  
   Scenario: Successful product registration with site id
     Given I am on the login page
     When I enter username
@@ -16,5 +16,6 @@ Feature: Project Registration with site id
     Then I verify details of Project in project details section
     When I click on the download PDF button 
     Then the PDF should contain the 'Complete System' text
+    
     
     
