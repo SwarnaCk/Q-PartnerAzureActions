@@ -1,5 +1,5 @@
 Feature: Project Registration without Solar panel, ESS product, Warranty certificate generation
-
+ @SCRUM-TC-269
   Scenario: Successful product registration without Solar panel, ESS product, Warranty certificate generation
     Given I am on the login page
     When I enter username

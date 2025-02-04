@@ -1,5 +1,5 @@
 Feature: Project Registration without site id
-  
+  @SCRUM-TC-264
   Scenario: Successful project registration without site id
     Given I am on the login page
     When I enter username

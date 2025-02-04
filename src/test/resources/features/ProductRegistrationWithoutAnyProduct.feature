@@ -1,5 +1,5 @@
 Feature: Product Registration without any product
-  
+  @SCRUM-TC-266
   Scenario: Successful product registration without any valid product
     Given I am on the login page
     When I enter username

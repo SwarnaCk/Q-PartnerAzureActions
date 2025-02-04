@@ -1,5 +1,6 @@
 Feature: Project Registration with site id
   
+  @SCRUM-TC-264
   Scenario: Successful product registration with site id
     Given I am on the login page
     When I enter username

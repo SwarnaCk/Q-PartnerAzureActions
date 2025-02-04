@@ -6,6 +6,17 @@ name: Run Cucumber Tests
         type: choice
         description: Select a scenario to run
         options:
+        - Successful product registration with site id
+        - Successful product registration without Solar panel, ESS product, Warranty
+          certificate generation
+        - Successful project registration without site id
+        - Successful product registration without Solar Panel without battery without
+          ESS products
+        - Successful product registration without any valid product
+        - Successful product registration without ESS product without battery
+        - Successful product registration without battery
+        - Successful product registration with only a battery
+        - Successful product registration with only ESS Products
         - All
         required: true
 jobs:
@@ -17,12 +28,12 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        distribution: temurin
         java-version: '17'
+        distribution: temurin
     - name: Run Specific Test Case
       env:
-        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         AIO_TOKEN: ${{ secrets.AIO_TOKEN }}
+        GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
       if: ${{ github.event.inputs.scenario != 'All' }}
       run: |-
         echo "Running scenario by name: ${{ github.event.inputs.scenario }}"

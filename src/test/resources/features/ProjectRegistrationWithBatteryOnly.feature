@@ -1,5 +1,5 @@
 Feature: Project Registration with Battery Only
-  
+  @SCRUM-TC-270
   Scenario: Successful product registration with only a battery
     Given I am on the login page
     When I enter username
