@@ -54,13 +54,13 @@ public class ProductRegistrationSteps {
 
     @When("I enter username")
     public void iEnterUsername() {
-        String username = resultUploader.getGitHubActionVariable("USERNAME");
+        String username = ConfigReader.getProperty("USERNAME");
         loginPage.enterUsername(username);
     }
 
     @When("I enter password")
     public void iEnterPassword() {
-        String password = resultUploader.getGitHubActionVariable("PASSWORD");
+        String password = ConfigReader.getProperty("PASSWORD");
         loginPage.enterPassword(password);
     }
 

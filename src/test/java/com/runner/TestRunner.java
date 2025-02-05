@@ -32,8 +32,8 @@ public class TestRunner {
                     : ConfigReader.loadEnv("AIO_TOKEN");
             gitToken = System.getenv("GIT_TOKEN") != null ? System.getenv("GIT_TOKEN")
                     : ConfigReader.loadEnv("GIT_TOKEN");
-            ResultUploaderToAIOTest resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
-            resultUploader.uploadTestResults(cucumberJsonFile);
+            //ResultUploaderToAIOTest resultUploader = new ResultUploaderToAIOTest(aioToken, gitToken);
+            //resultUploader.uploadTestResults(cucumberJsonFile);
         } else {
             System.err.println("Cucumber JSON file not found: " + cucumberJsonFile.getAbsolutePath());
             return;
